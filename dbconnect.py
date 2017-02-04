@@ -1,5 +1,6 @@
 import logging
 import os
+import MySQLdb
 
 def connect_to_cloudsql():
 
