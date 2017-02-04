@@ -6,6 +6,10 @@ handlers:
 - url: /.*
   script: main.app
 
+libraries:
+- name: MySQLdb
+  version: "latest"
+
 # [START env]
 env_variables:
   MYSQL_USER: "root"
