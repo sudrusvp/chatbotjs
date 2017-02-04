@@ -23,12 +23,19 @@ def main_page():
 @app.route("/KRA", methods=['POST'])
 def kra():
 	logging.info("inside KRA")
+	
+	dbconnect = db.connect_to_cloudsql()
+
 	if request.method == 'POST':
+	
+		logging.info("inside POST")
 		parameters = request.form['result']['parameters']
 
+		logging.info("parameters : "+parameters)
 		if parameters['action'] == 'getname':
 
-			if db.checkUser(parameters['firstname'], parameters['lastname'], parameters['employeeId']) :
+			logging.info("inside action")
+			if db.checkUser(parameters['firstname'], parameters['lastname'], parameters['employeeId'], dbconnect) :
 				logging.info("returning True")
 				return "Welcome"
 			else:

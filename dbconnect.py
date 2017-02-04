@@ -21,9 +21,7 @@ def connect_to_cloudsql():
 	logging.info("connected to db")
 	return db
 
-db = connect_to_cloudsql()
-
-def checkUser(firstname, lastname, employeeId):
+def checkUser(firstname, lastname, employeeId, db):
 
 	cursor = db.cursor()
 	cursor.execute("SELECT COUNT(*) FROM UserMaster WHERE FirstName = '%s' AND LastName = '%s' AND EmpCode = '%s'" % (firstname, lastname, employeeId))
