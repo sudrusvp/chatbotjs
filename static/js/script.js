@@ -17,7 +17,7 @@ $(function(){
 
 		});
 */
-		const client = new ApiAi.ApiAiClient({accessToken: '2e305571959847228c0c4a5d9a33b4c6'});
+		const client = new ApiAi.ApiAiClient({accessToken: '326dceb2db07464bbe884f40a348ab5d'});
 		let promise = client.textRequest(data.message);
 
 		promise
