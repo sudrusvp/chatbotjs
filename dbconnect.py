@@ -14,7 +14,7 @@ def connect_to_cloudsql():
 		unix_socket=cloudsql_unix_socket,
 		user=CLOUDSQL_USER,
 		passwd=CLOUDSQL_PASSWORD,
-		CLOUDSQL_DB)
+		db=CLOUDSQL_DB)
 
 	logging.info("connected to db")
 	return db
@@ -29,7 +29,7 @@ def checkUser(firstname, lastname, employeeId):
 	count = cursor.rowcount
 
 	logging.info("count: "+count)
-	
+
 	if count > 0:
 		return True
 	else :
