@@ -26,6 +26,10 @@ $(function(){
 
 		function handleResponse(serverResponse) {
 		        console.log(serverResponse);
+		        var res = serverResponse.result.fulfillment.speech;
+		        $('.chatdiv').append("<div class='row' style='margin: 5px 0px'> <div class='col-sm-8 text-left'> <div class='received text-left'>"+res+"</div> </div> </div>");
+				$(".chatdiv").animate({ scrollTop: $('.chatdiv').prop("scrollHeight")}, 1000);
+
 		}
 		function heandleError(serverError) {
 		        console.log(serverError);
