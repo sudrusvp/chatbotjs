@@ -5,6 +5,7 @@ from flask import Flask
 from flask import render_template
 from flask import request, url_for
 import json
+import logging
 import MySQLdb
 import dbconnect as db
 
@@ -21,17 +22,20 @@ def main_page():
 	
 @app.route("/KRA", methods=['POST'])
 def kra():
-
+	logging.info("inside KRA")
 	if request.method == 'POST':
 		parameters = request.form['result']['parameters']
 
 		if parameters['action'] == 'getname':
 
 			if db.checkUser(parameters['firstname'], parameters['lastname'], parameters['employeeId']) :
+				logging.info("returning True")
 				return "Welcome"
 			else:
+				logging.info("returning False")
 				return "Failed to authenticate"
 		else:
+			logging.info("returning default")
 			return "default"
 
 

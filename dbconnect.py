@@ -1,3 +1,4 @@
+import logging
 
 def connect_to_cloudsql():
 
@@ -15,6 +16,7 @@ def connect_to_cloudsql():
 		passwd=CLOUDSQL_PASSWORD,
 		CLOUDSQL_DB)
 
+	logging.info("connected to db")
 	return db
 
 db = connect_to_cloudsql()
@@ -25,6 +27,8 @@ def checkUser(firstname, lastname, employeeId):
 	cursor.execute("SELECT COUNT(*) FROM UserMaster WHERE FirstName = '%s' AND LastName = '%s' AND EmpCode = '%s'" % (firstname, lastname, employeeId))
 
 	count = cursor.rowcount
+
+	logging.info("count: "+count)
 	
 	if count > 0:
 		return True
