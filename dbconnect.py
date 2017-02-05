@@ -24,10 +24,14 @@ def connect_to_cloudsql():
 def checkUser(firstname, lastname, employeeId, db):
 
 	cursor = db.cursor()
-	cursor.execute("SELECT COUNT(*) FROM UserMaster WHERE FirstName = '%s' AND LastName = '%s' AND EmpCode = '%s'" % (firstname, lastname, employeeId))
 
+	logging.info("cursor built")
+	cursor.execute("SELECT COUNT(*) FROM UserMaster WHERE FirstName = '%s' AND LastName = '%s' AND EmpCode = '%d'" % (firstname, lastname, employeeId))
+
+	logging.info("query executed")
 	count = cursor.rowcount
 
+	logging.info("rowcount fetched")
 	logging.info("count: "+count)
 
 	if count > 0:

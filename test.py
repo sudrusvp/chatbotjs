@@ -18,6 +18,8 @@ def main_app():
     connection = db.connect_to_cloudsql()
     
     logging.info("connection successful")
+
+    db.checkUser("Mayur", "Jain", 005892, connection)
     return "hello"
 
 
