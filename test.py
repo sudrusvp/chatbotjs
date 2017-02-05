@@ -13,11 +13,11 @@ app = Flask(__name__)
 @app.route("/", methods=['GET'])
 def main_app():
 
-    #logging.info("attempt to connect!!")
+    logging.info("attempt to connect!!")
     
-    #connection = db.connect_to_cloudsql()
+    connection = db.connect_to_cloudsql()
     
-    #logging.info("connection successful")
+    logging.info("connection successful")
     return "hello"
 
 
