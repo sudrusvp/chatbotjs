@@ -32,7 +32,7 @@ def checkUser(firstname, lastname, employeeId, db):
 	count = cursor.rowcount
 
 	logging.info("rowcount fetched")
-	logging.info("count: "+count)
+	logging.info("count: "+str(count))
 
 	if count > 0:
 		return True
