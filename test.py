@@ -11,6 +11,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=['GET'])
 def main():
+    connection = db.connect_to_cloudsql()
     return "hello"
 
 
