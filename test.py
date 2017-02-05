@@ -2,6 +2,7 @@
 from flask import Flask
 from flask import render_template
 from flask import request, url_for
+import logging
 
 import MySQLdb
 
@@ -10,8 +11,13 @@ import dbconnect as db
 app = Flask(__name__)
 
 @app.route("/", methods=['GET'])
-def main():
+def main_app():
+
+    logging.info("attempt to connect!!")
+    
     connection = db.connect_to_cloudsql()
+    
+    logging.info("connection successful")
     return "hello"
 
 
