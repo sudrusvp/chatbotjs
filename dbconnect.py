@@ -26,7 +26,7 @@ def checkUser(firstname, lastname, employeeId, db):
 	cursor = db.cursor()
 
 	logging.info("cursor built")
-	cursor.execute("SELECT COUNT(*) FROM UserMaster WHERE FirstName = '%s' AND LastName = '%s' AND EmpCode = '%d'" % (firstname, lastname, employeeId))
+	cursor.execute("SELECT COUNT(*) FROM UserMaster WHERE FirstName = '%s' AND LastName = '%s'" % (firstname, lastname))
 
 	logging.info("query executed")
 	count = cursor.rowcount

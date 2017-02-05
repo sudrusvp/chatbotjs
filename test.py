@@ -19,7 +19,7 @@ def main_app():
     
     logging.info("connection successful")
 
-    db.checkUser("Mayur", "Jain", 005892, connection)
+    db.checkUser("Mayur", "Jain", connection)
     return "hello"
 
 
