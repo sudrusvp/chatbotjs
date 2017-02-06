@@ -48,7 +48,15 @@ def kra():
 				return "Welcome "#+parameters['firstname']+" "+parameters['lastname']
 			else:
 				logging.info("returning False")
-				return "Failed to authenticate"
+
+				req = {
+					"speech": "Failed to authenticate",
+					"displayText": "Failed to authenticate",
+					"data": {"speech": "Failed to authenticate"},
+					}
+				r = make_response(req)
+				r.headers['Content-Type'] = 'application/json'
+				return r
 		else:
 			logging.info("returning default")
 			return "default"
