@@ -29,7 +29,7 @@ def kra():
 	if request.method == 'POST':
 	
 		logging.info("inside POST")
-		logging.info(request.form)
+		logging.info(json.dumps(request.form))
 		parameters = request.form['result']['parameters']
 
 		logging.info("parameters : "+parameters)
