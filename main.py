@@ -56,7 +56,7 @@ def kra():
 			speech = "default"
 
 		req = {
-				"speech": ,
+				"speech": speech,
 				"displayText": speech,
 				"data": {"speech": speech},
 			}
