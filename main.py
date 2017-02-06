@@ -31,15 +31,10 @@ def kra():
 		logging.info("inside POST")
 		req = request.get_json(silent=True, force=True)
 
-		logging.info(str(req))
-		logging.info(req)
-		
-		req = json.dumps(req, indent=4)
-
-		logging.info(str(req))
+		logging.info(type(req) )
 		logging.info(req)
 
-		parameters = req
+		parameters = req['result']['parameters']
 		for p in parameters:
 			logging.info(p)
 			logging.info(parameters[p])
