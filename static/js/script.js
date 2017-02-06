@@ -16,7 +16,7 @@ $(function(){
 		$("#message").val("");
 
 
-		const client = new ApiAi.ApiAiClient('6d2145bdf1b4463c86d5c6bcc2f05b9c');
+		const client = new ApiAi.ApiAiClient({accessToken: '6d2145bdf1b4463c86d5c6bcc2f05b9c'});
 		let promise = client.textRequest(data.message);
 
 		promise
