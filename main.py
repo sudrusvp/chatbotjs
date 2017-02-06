@@ -32,7 +32,7 @@ def kra():
 
 		logging.info(str(request))
 		parameters = request.form
-		logging.info(parameters)
+		logging.info(str(parameters))
 
 		for p in parameters:
 			logging.info(p)
