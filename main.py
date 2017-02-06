@@ -30,8 +30,8 @@ def kra():
 	
 		logging.info("inside POST")
 
-		parameters = request.form['result']['parameters']
-		logging.info('Hello')
+		parameters = request.form.get('result')
+		
 		logging.info("parameters : "+parameters)
 		if parameters['action'] == 'getname':
 
