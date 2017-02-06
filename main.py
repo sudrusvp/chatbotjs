@@ -30,6 +30,7 @@ def kra():
 	
 		logging.info("inside POST")
 
+		logging.info(str(request.args))
 		parameters = request.form
 		logging.info(parameters)
 
