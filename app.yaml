@@ -3,11 +3,11 @@ api_version: 1
 threadsafe: true
 
 handlers:
-# - url: /.*
-#   script: main.app
-
 - url: /.*
-  script: test.app
+  script: main.app
+
+ # - url: /.*
+ #  script: test.app
 
 libraries:
 - name: MySQLdb

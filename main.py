@@ -37,7 +37,7 @@ def kra():
 			logging.info("inside action")
 			if db.checkUser(parameters['firstname'], parameters['lastname'], parameters['employeeId'], dbconnect) :
 				logging.info("returning True")
-				return "Welcome"
+				return "Welcome "+parameters['firstname']+" "+parameters['lastname']
 			else:
 				logging.info("returning False")
 				return "Failed to authenticate"
