@@ -45,25 +45,25 @@ def kra():
 			logging.info("inside action")
 			if db.checkUser(parameters['firstname'], parameters['lastname'], parameters['employeeId'], dbconnect) :
 				logging.info("returning True")
-				return "Welcome "#+parameters['firstname']+" "+parameters['lastname']
+				speech = "Welcome "+parameters['firstname']+" "+parameters['lastname']
 			else:
 				logging.info("returning False")
 
-				req = {
-					"speech": "Failed to authenticate",
-					"displayText": "Failed to authenticate",
-					"data": {"speech": "Failed to authenticate"},
-					}
-					
-				req = json.dumps(req, indent=4)
-				r = make_response(req)
-				r.headers['Content-Type'] = 'application/json'
-				return r
+				speech = "Failed to authenticate"
+				
 		else:
 			logging.info("returning default")
-			return "default"
+			speech = "default"
 
-
+		req = {
+				"speech": ,
+				"displayText": speech,
+				"data": {"speech": speech},
+			}
+		req = json.dumps(req, indent=4)
+		r = make_response(req)
+		r.headers['Content-Type'] = 'application/json'
+		return r
 
 if __name__ == "__main__":
 	app.run(debug=True,  port=int(8080))
