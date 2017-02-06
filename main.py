@@ -55,7 +55,7 @@ def kra():
 					"data": {"speech": "Failed to authenticate"},
 					}
 					
-				req = json.dumps(res, indent=4)
+				req = json.dumps(req, indent=4)
 				r = make_response(req)
 				r.headers['Content-Type'] = 'application/json'
 				return r
