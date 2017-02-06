@@ -49,7 +49,7 @@ def kra():
 			else:
 				logging.info("returning False")
 
-				speech = "Failed to authenticate!!! \\n Please re-enter your fullname and employee ID"
+				speech = "Failed to authenticate!!! <br> Please re-enter your fullname and employee ID"
 				
 		else:
 			logging.info("returning default")
