@@ -35,8 +35,9 @@ def kra():
 		logging.info(req)
 
 		parameters = req['result']['parameters']
-	
-		if parameters['action'] == 'getname': #case for authentication
+		action = req['result']['action']
+
+		if action == 'getname': #case for authentication
 
 			logging.info("inside getname")
 			if db.checkUser(parameters['firstname'].title(), parameters['lastname'].title(), parameters['employeeId'], dbconnect) :
@@ -47,7 +48,7 @@ def kra():
 
 				speech = "Failed to authenticate!!! <br> Please re-enter your fullname and employee ID"
 			
-		elif req['result']['action'] == 'showkra':
+		elif action == 'showkra': #case to show kra
 			logging.info("inside showkra")
 
 			if parameters['whose'].lower() == 'me' | parameters['whose'].lower() == 'my' | parameters['whose'].lower() == 'myself' :
