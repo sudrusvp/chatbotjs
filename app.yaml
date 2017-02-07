@@ -12,6 +12,10 @@ handlers:
 libraries:
 - name: MySQLdb
   version: "latest"
+- name: numpy
+  version: latest
+- name: ssl
+  version: latest
 
 # [START env]
 env_variables:
