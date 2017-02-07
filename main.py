@@ -35,25 +35,35 @@ def kra():
 		logging.info(req)
 
 		parameters = req['result']['parameters']
-		for p in parameters:
-			logging.info(p)
-			logging.info(parameters[p])
+	
+		if parameters['action'] == 'getname': #case for authentication
 
-		# logging.info("parameters : "+ parameters)
-		if parameters['action'] == 'getname':
-
-			logging.info("inside action")
-			if db.checkUser(parameters['firstname'], parameters['lastname'], parameters['employeeId'], dbconnect) :
+			logging.info("inside getname")
+			if db.checkUser(parameters['firstname'].tilte(), parameters['lastname'].title(), parameters['employeeId'], dbconnect) :
 				logging.info("returning True")
 				speech = "Welcome "+parameters['firstname']+" "+parameters['lastname']
 			else:
 				logging.info("returning False")
 
 				speech = "Failed to authenticate!!! <br> Please re-enter your fullname and employee ID"
-				
+			
+		elif req['result']['action'] == 'showkra':
+			logging.info("inside showkra")
+
+			if parameters['whose'].lower() == 'me' | parameters['whose'].lower() == 'my' | parameters['whose'].lower() == 'myself' :
+				speech = "your KRAS"
+			elif parameters['whose'].lower() == 'subordinate':
+				speech = "list of subordinates"
+			else:
+				speech = "I didnt get that"
 		else:
 			logging.info("returning default")
-			speech = "default"
+			speech = "Hi, how may I help you"
+
+
+
+
+
 
 		req = {
 				"speech": speech,
