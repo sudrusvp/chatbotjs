@@ -51,7 +51,7 @@ def kra():
 		elif action == 'showkra': #case to show kra
 			logging.info("inside showkra")
 
-			if parameters['whose'].lower() == 'me' | parameters['whose'].lower() == 'my' | parameters['whose'].lower() == 'myself' :
+			if parameters['whose'].lower() == 'me' or parameters['whose'].lower() == 'my' or parameters['whose'].lower() == 'myself' :
 				speech = "your KRAS"
 			elif parameters['whose'].lower() == 'subordinate':
 				speech = "list of subordinates"
