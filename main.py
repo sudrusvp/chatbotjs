@@ -39,7 +39,7 @@ def kra():
 		if parameters['action'] == 'getname': #case for authentication
 
 			logging.info("inside getname")
-			if db.checkUser(parameters['firstname'].tilte(), parameters['lastname'].title(), parameters['employeeId'], dbconnect) :
+			if db.checkUser(parameters['firstname'].title(), parameters['lastname'].title(), parameters['employeeId'], dbconnect) :
 				logging.info("returning True")
 				speech = "Welcome "+parameters['firstname']+" "+parameters['lastname']
 			else:
