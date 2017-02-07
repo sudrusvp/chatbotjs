@@ -14,11 +14,23 @@ app = Flask(__name__, static_url_path='/static')
 @app.route("/", methods=['GET', 'POST'])
 def main_page():
 
+	CLIENT_ACCESS_TOKEN = "6d2145bdf1b4463c86d5c6bcc2f05b9c"
+	
 	if request.method == 'GET':
 		
 		return render_template("index.html")	
 
 		#input_text = request.form['input_text'
+	elif request.method == 'POST':
+		#return request.form['message']
+		ai = apiai.ApiAI(CLIENT_ACCESS_TOKEN)
+		req = ai.text_request()
+		req.session_id = "session11"
+		req.query = request.form['message']
+		res = req.getresponse()
+		response_message = res.read()
+		response_message = json.loads(response_message)
+		return response_message["result"]['fulfillment']['speech']
 	
 @app.route("/KRA", methods=['POST'])
 def kra():
@@ -52,7 +64,8 @@ def kra():
 			logging.info("inside showkra")
 
 			if parameters['whose'].lower() == 'me' or parameters['whose'].lower() == 'my' or parameters['whose'].lower() == 'myself' :
-				speech = "your KRAS"
+				speech = getKras(parameters['employeeId'])
+
 			elif parameters['whose'].lower() == 'subordinate':
 				speech = "list of subordinates"
 			else:
