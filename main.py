@@ -8,6 +8,7 @@ import json
 import logging
 import MySQLdb
 import dbconnect as db
+import apiai
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -15,7 +16,7 @@ app = Flask(__name__, static_url_path='/static')
 def main_page():
 
 	CLIENT_ACCESS_TOKEN = "6d2145bdf1b4463c86d5c6bcc2f05b9c"
-	
+
 	if request.method == 'GET':
 		
 		return render_template("index.html")	
