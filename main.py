@@ -68,7 +68,7 @@ def kra():
 				speech = getKras(parameters['employeeId'])
 
 			elif parameters['whose'].lower() == 'subordinate':
-				speech = "list of subordinates"
+				speech = getSubordinates(parameters['employeeId'])
 			else:
 				speech = "I didnt get that"
 		else:
