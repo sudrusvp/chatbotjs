@@ -83,7 +83,7 @@ def getKras(employeeId, db):
 			</table>"
 
 
-def getSubordinates(employeeId, db)
+def getSubordinates(employeeId, db):
 	logging.info("Inside getSubordinates()")
 
 	cursor = db.cursor()	
