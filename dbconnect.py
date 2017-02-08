@@ -108,7 +108,7 @@ def getSubordinates(employeeId, db):
 							</tr>"
 
 		speech = speech + "</table>\
-							Enter the Employee code of the subordiante, whose KRA you want to see"
+							Enter the Employee code of the subordinate, whose KRA you want to see"
 									
 		return speech
 
