@@ -55,7 +55,7 @@ def kra():
 			logging.info("inside getname")
 			if db.checkUser(parameters['firstname'].title(), parameters['lastname'].title(), parameters['employeeId'], dbconnect) :
 				logging.info("returning True")
-				speech = "Welcome "+parameters['firstname']+" "+parameters['lastname']
+				speech = "Welcome "+parameters['firstname']+" "+parameters['lastname']+" <br>How may I help you?"
 			else:
 				logging.info("returning False")
 
@@ -70,7 +70,7 @@ def kra():
 			elif parameters['whose'].lower() == 'subordinate':
 				speech = db.getSubordinates(parameters['employeeId'], dbconnect)
 			else:
-				speech = "I didnt get that"
+				speech = "I didnt get that.."
 		else:
 			logging.info("returning default")
 			speech = "Hi, how may I help you"
