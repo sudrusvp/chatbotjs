@@ -65,10 +65,10 @@ def kra():
 			logging.info("inside showkra")
 
 			if parameters['whose'].lower() == 'me' or parameters['whose'].lower() == 'my' or parameters['whose'].lower() == 'myself' :
-				speech = getKras(parameters['employeeId'])
+				speech = db.getKras(parameters['employeeId'], dbconnect)
 
 			elif parameters['whose'].lower() == 'subordinate':
-				speech = getSubordinates(parameters['employeeId'])
+				speech = db.getSubordinates(parameters['employeeId'], dbconnect)
 			else:
 				speech = "I didnt get that"
 		else:
@@ -77,8 +77,7 @@ def kra():
 
 
 
-
-
+		dbconnect.close()
 
 		req = {
 				"speech": speech,

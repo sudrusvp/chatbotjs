@@ -21,6 +21,7 @@ def connect_to_cloudsql():
 	logging.info("connected to db")
 	return db
 
+
 def checkUser(firstname, lastname, employeeId, db):
 	logging.info("Inside checkUser()")
 
