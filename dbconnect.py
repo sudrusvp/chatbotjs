@@ -112,4 +112,6 @@ def getSubordinates(employeeId, db)
 
 		speech = speech + "</table>"
 
+		return speech
+
 
