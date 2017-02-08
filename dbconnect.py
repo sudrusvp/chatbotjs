@@ -48,10 +48,10 @@ def getKras(employeeId, db):
 	cursor = db.cursor()	
 
 	logging.info("cursor built")
-	#cursor.execute("SELECT KRATitle, Weight FROM EmployeeKRA WHERE #####")
+	#cursor.execute("SELECT KRATitle, Weight FROM EmployeeKRA WHERE ")
 
 	
-	return "These are the KRA titles set for you.<br>\
+	return "These are the KRA titles<br>\
 			<table>\
 				<tr>\
 					<th>KRATitle</th>\
@@ -99,19 +99,17 @@ def getSubordinates(employeeId, db):
 		return "You dont have any subordinates"
 	else:
 		results = cursor.fetchall()
-		speech = "Select the subordinate: <br>\
+		speech = "These are your subordinates: <br>\
 					<table>"
 		for row in results:
 			speech = speech + "<tr>\
 								<td>"+str(row[0])+"</td>\
-								<td>"+str(row[1])+"</td>\
-								<td>"+str(row[2])+"</td>\
+								<td>"+str(row[1])+" "+str(row[2])+"</td>\
 							</tr>"
 
 		speech = speech + "</table>\
-							Enter the Employee code of the subordiante, whose KRA you want to see\
-									"
-
+							Enter the Employee code of the subordiante, whose KRA you want to see"
+									
 		return speech
 
 

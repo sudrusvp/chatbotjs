@@ -71,11 +71,11 @@ def kra():
 				speech = db.getSubordinates(parameters['employeeId'], dbconnect)
 			else:
 				speech = "I didnt get that.."
+		elif action == 'showkra_of_subordinate':
+			speech = db.getKras(parameters['subordinateId'], dbconnect)
 		else:
 			logging.info("returning default")
 			speech = "Hi, how may I help you"
-
-
 
 		dbconnect.close()
 
