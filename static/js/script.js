@@ -74,7 +74,7 @@ $(function(){
 		    console.log("text:");
 		    console.log(text)
 
-		    setInput(text.fulfillment.speech);
+		    setInput(text);
 			stopRecognition();
 		};
 		recognition.onend = function() {
