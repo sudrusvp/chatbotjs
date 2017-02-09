@@ -48,40 +48,32 @@ def getKras(employeeId, db):
 	cursor = db.cursor()	
 
 	logging.info("cursor built")
-	#cursor.execute("SELECT KRATitle, Weight FROM EmployeeKRA WHERE ")
+	cursor.execute("SELECT K.KRATitle, K.Weight FROM EmployeeKRA K, UserMaster U WHERE U.EmpCode = '%s' AND K.EmpID = U.UserID" % (employeeId))
 
-	
-	return "These are the KRA titles<br>\
-			<table>\
+	count = cursor.rowcount
+
+	if count < 1:
+		return "You dont have any KRA set"
+	else:
+		results = cursor.fetchall()
+		speech = "These are the KRA titles<br>\
+					<table>\
+						<tr>\
+							<th>Title</th>\
+							<th>Weight</th>\
+						</tr>"
+
+		for row in results:
+
+			speech = speech + "\
 				<tr>\
-					<th>KRATitle</th>\
-					<th>Weight</th>\
-				</tr>\
-				<tr>\
-					<td>Project Execution (Delivery Excellence)</td>\
-					<td>25</td>\
-				</tr>\
-				<tr>\
-					<td>Process Compliance (and Quality Adherence)</td>\
-					<td>25</td>\
-				</tr>\
-				<tr>\
-					<td>Design & Technology Adoption</td>\
-					<td>20</td>\
-				</tr>\
-				<tr>\
-					<td>Communication & Presentation Skills</td>\
-					<td>10</td>\
-				</tr>\
-				<tr>\
-					<td>Knowledge Sharing/Training</td>\
-					<td>10</td>\
-				</tr>\
-				<tr>\
-					<td>Self Development</td>\
-					<td>10</td>\
-				</tr>\
-			</table><br>"
+					<td>"+str(row[0])+"</td>\
+					<td>"+str(row[0])+"</td>\
+				</tr>"
+				
+		speech = speech + "</table><br>"
+
+		return speech
 
 
 def getSubordinates(employeeId, db):
