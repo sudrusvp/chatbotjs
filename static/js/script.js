@@ -109,7 +109,7 @@ $(function(){
 
 	function updateRec() {
 		$("#rec").text(recognition ? "Stop" : "Speak");
-		$("#message").text(recognition ? "Listening..." : "");
+		$("#message").val(recognition ? "Listening..." : "");
 	}
 
 });
