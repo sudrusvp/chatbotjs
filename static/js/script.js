@@ -69,9 +69,12 @@ $(function(){
 		recognition.onresult = function(event) {
 			var text = "";
 		    for (var i = event.resultIndex; i < event.results.length; ++i) {
-		    	text += event.results[i][0].transcript.result.fulfillment.speech;
+		    	text += event.results[i][0].transcript;
 		    }
-		    setInput(text);
+		    console.log("text:");
+		    console.log(text)
+
+		    setInput(text.fulfillment.speech);
 			stopRecognition();
 		};
 		recognition.onend = function() {
