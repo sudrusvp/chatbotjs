@@ -131,11 +131,6 @@ def getKraDescription(KRAID, db):
 			speech = speech + str(row[0])
 
 		logging.info(speech)
-
-		results = cursor.fetchone()
-		speech = "KRA Descriptions : <br> "+str(results)
-
-		logging.info(speech)
 		return speech
 
 
