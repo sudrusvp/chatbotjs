@@ -68,7 +68,7 @@ def getKras(employeeId, db):
 			speech = speech + "\
 				<tr>\
 					<td>"+str(row[0])+"</td>\
-					<td>"+str(row[0])+"</td>\
+					<td>"+str(row[1])+"</td>\
 				</tr>"
 				
 		speech = speech + "</table><br>"
