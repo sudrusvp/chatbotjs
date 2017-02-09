@@ -24,9 +24,10 @@ def main_page():
 		#input_text = request.form['input_text'
 	elif request.method == 'POST':
 		#return request.form['message']
+		var sessionID = request.form['sessionID']
 		ai = apiai.ApiAI(CLIENT_ACCESS_TOKEN)
 		req = ai.text_request()
-		req.session_id = "session11"
+		req.session_id = sessionID
 		req.query = request.form['message']
 		res = req.getresponse()
 		response_message = res.read()
