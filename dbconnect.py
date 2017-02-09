@@ -116,7 +116,7 @@ def getKraDescription(KRAID, db):
 
 	logging.info("cursor built")
 	logging.info("KRAID :" + KRAID)
-	logging.info("type of KRAID :" + type(KRAID))
+	logging.info("type of KRAID :" + str(type(KRAID)))
 	cursor.execute("SELECT Description FROM EmployeeKRA WHERE EmpKRAID = '%d'" % (int(KRAID)))
 
 	count = cursor.rowcount
