@@ -115,7 +115,7 @@ def getKraDescription(KRAID, db):
 	cursor = db.cursor()	
 
 	logging.info("cursor built")
-
+	logging.info("KRAID :" + KRAID)
 	cursor.execute("SELECT Description FROM EmployeeKRA WHERE EmpKRAID = '%d'" % (KRAID))
 
 	count = cursor.rowcount
@@ -128,7 +128,7 @@ def getKraDescription(KRAID, db):
 
 		for row in results:
 			speech = speech + row[0]
-			
+
 		return speech
 
 
