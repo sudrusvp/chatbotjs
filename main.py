@@ -95,5 +95,10 @@ def kra():
 		r.headers['Content-Type'] = 'application/json'
 		return r
 
+
+@app.route("/recognition", methods=['GET', 'POST'])
+def recognition():
+	return render_template("recognize.html")	
+
 if __name__ == "__main__":
 	app.run(debug=True,  port=int(8080))
