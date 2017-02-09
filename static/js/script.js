@@ -7,7 +7,7 @@ $(function(){
 	
 	console.log(sessionID)
 	
-	$('button').click(function() {
+	function send() {
 		var data = {
 			"message" : $("#message").val(),
 			"sessionID" : sessionID
@@ -43,15 +43,14 @@ $(function(){
 		}
 */
 
-	});
-
+	};
 
 
 	$("#message").keypress(function(event) {
 		if (event.which == 13) {
 			event.preventDefault();
-			
-			$('button').trigger("click");
+
+			send();
 		}
 	});
 
@@ -62,54 +61,49 @@ $(function(){
 
 	var recognition;
 
-		function startRecognition() {
-			recognition = new webkitSpeechRecognition();
-			recognition.onstart = function(event) {
-				updateRec();
-			};
-			recognition.onresult = function(event) {
-				var text = "";
-			    for (var i = event.resultIndex; i < event.results.length; ++i) {
-			    	text += event.results[i][0].transcript.result.fulfillment.speech;
-			    }
-			    setInput(text);
-				stopRecognition();
-			};
-			recognition.onend = function() {
-				stopRecognition();
-			};
-			recognition.lang = "en-US";
-			recognition.start();
-		}
-	
-		function stopRecognition() {
-			if (recognition) {
-				recognition.stop();
-				recognition = null;
-			}
+	function startRecognition() {
+		recognition = new webkitSpeechRecognition();
+		recognition.onstart = function(event) {
 			updateRec();
+		};
+		recognition.onresult = function(event) {
+			var text = "";
+		    for (var i = event.resultIndex; i < event.results.length; ++i) {
+		    	text += event.results[i][0].transcript.result.fulfillment.speech;
+		    }
+		    setInput(text);
+			stopRecognition();
+		};
+		recognition.onend = function() {
+			stopRecognition();
+		};
+		recognition.lang = "en-US";
+		recognition.start();
+	}
+
+	function stopRecognition() {
+		if (recognition) {
+			recognition.stop();
+			recognition = null;
 		}
+		updateRec();
+	}
 
-		function switchRecognition() {
-			if (recognition) {
-				stopRecognition();
-			} else {
-				startRecognition();
-			}
+	function switchRecognition() {
+		if (recognition) {
+			stopRecognition();
+		} else {
+			startRecognition();
 		}
+	}
 
-		function setInput(text) {
-			$("#message").val(text);
-			$('button').trigger("click");
-		}
+	function setInput(text) {
+		$("#message").val(text);
+		send()
+	}
 
-		function updateRec() {
-			$("#rec").text(recognition ? "Stop" : "Speak");
-		}
+	function updateRec() {
+		$("#rec").text(recognition ? "Stop" : "Speak");
+	}
 
-	$( "#myform" ).submit(function( event ) {
-
-		$('button').trigger("click");
-	  	event.preventDefault();
-	});
 });
