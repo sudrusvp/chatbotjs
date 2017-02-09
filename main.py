@@ -74,6 +74,11 @@ def kra():
 				speech = "I didnt get that.."
 		elif action == 'showkra_of_subordinate':
 			speech = db.getKras(parameters['subordinateId'], dbconnect)
+
+		elif action == "get_kra_title":
+
+			speech = db.getKraDescription(parameters['KRAID'], dbconnect)	
+
 		else:
 			logging.info("returning default")
 			speech = "Hi, how may I help you"

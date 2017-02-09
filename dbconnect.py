@@ -48,17 +48,18 @@ def getKras(employeeId, db):
 	cursor = db.cursor()	
 
 	logging.info("cursor built")
-	cursor.execute("SELECT K.KRATitle, K.Weight FROM EmployeeKRA K, UserMaster U WHERE U.EmpCode = '%s' AND K.EmpID = U.UserID" % (employeeId))
+	cursor.execute("SELECT K.EmpKRAID, K.KRATitle, K.Weight FROM EmployeeKRA K, UserMaster U WHERE U.EmpCode = '%s' AND K.EmpID = U.UserID" % (employeeId))
 
 	count = cursor.rowcount
 
 	if count < 1:
-		return "You dont have any KRA set"
+		return "KRA is not set"
 	else:
 		results = cursor.fetchall()
 		speech = "These are the KRA titles<br>\
 					<table>\
 						<tr>\
+							<th>KRAID</th>\
 							<th>Title</th>\
 							<th>Weight</th>\
 						</tr>"
@@ -69,9 +70,11 @@ def getKras(employeeId, db):
 				<tr>\
 					<td>"+str(row[0])+"</td>\
 					<td>"+str(row[1])+"</td>\
+					<td>"+str(row[2])+"</td>\
 				</tr>"
 				
-		speech = speech + "</table><br>"
+		speech = speech + "</table><br>\
+							Enter the KRAID whose details you want to see"
 
 		return speech
 
@@ -103,5 +106,30 @@ def getSubordinates(employeeId, db):
 							Enter the Employee code of the subordinate, whose KRA you want to see"
 									
 		return speech
+
+
+
+def getKraDescription(KRAID, db):
+	logging.info("Inside getKraDescription()")
+
+	cursor = db.cursor()	
+
+	logging.info("cursor built")
+
+	cursor.execute("SELECT Description FROM EmployeeKRA WHERE EmpKRAID = '%d'" % (KRAID))
+
+	count = cursor.rowcount
+
+	if count < 1:
+		return "Incorect KRAID"
+	else:
+		results = cursor.fetchall()
+		speech = "KRA Descriptions : <br> "
+
+		for row in results:
+			speech = speech + row[0]
+			
+		return speech
+
 
 
