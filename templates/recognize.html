@@ -91,6 +91,12 @@
 
 		function setResponse(val) {
 			$("#response").text(val);
+			var msg = new SpeechSynthesisUtterance();
+    		var voices = window.speechSynthesis.getVoices();
+		    msg.voiceURI = "native";
+		    msg.text = "Hello world";
+		    msg.lang = "en-US";
+		    window.speechSynthesis.speak(msg);
 		}
 
 	</script>
