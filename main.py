@@ -24,7 +24,7 @@ def main_page():
 		#input_text = request.form['input_text'
 	elif request.method == 'POST':
 		#return request.form['message']
-		var sessionID = request.form['sessionID']
+		sessionID = request.form['sessionID']
 		ai = apiai.ApiAI(CLIENT_ACCESS_TOKEN)
 		req = ai.text_request()
 		req.session_id = sessionID
