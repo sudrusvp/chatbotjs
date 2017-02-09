@@ -77,9 +77,11 @@ $(function(){
 		    setInput(text);
 			stopRecognition();
 		};
+		
 		recognition.onend = function() {
 			stopRecognition();
 		};
+
 		recognition.lang = "en-US";
 		recognition.start();
 	}
@@ -107,6 +109,7 @@ $(function(){
 
 	function updateRec() {
 		$("#rec").text(recognition ? "Stop" : "Speak");
+		$("#message").text(recognition ? "Listening..." : "");
 	}
 
 });
