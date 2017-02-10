@@ -146,10 +146,10 @@ def getKraDescription(KRAID, choice, whose, db):
 		for row in results:
 			speech = speech + str(row[0])
 
-	if whose == 'me' or whose == 'my' or whose == 'mine' or whose == 'myself' and choice == 'self comment':
-		speech = speech + "<br><br>Do you want to update the "+str(choice)+"?"
-	elif whose == 'subordinate' and choice != 'self comment' :
-		speech = speech + "<br><br>Do you want to update the "+str(choice)+"?"
+		if whose == 'me' or whose == 'my' or whose == 'mine' or whose == 'myself' and choice == 'self comment':
+			speech = speech + "<br><br>Do you want to update the "+str(choice)+"?"
+		elif whose == 'subordinate' and choice != 'self comment' :
+			speech = speech + "<br><br>Do you want to update the "+str(choice)+"?"
 
 	logging.info(speech)
 	return speech
