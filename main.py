@@ -60,7 +60,7 @@ def kra():
 			else:
 				logging.info("returning False")
 
-				speech = "Failed to authenticate!!! <br> Please re-enter your fullname and employee ID"
+				speech = "The Employee ID does not match with the name entered. <BR><BR> Please enter the correct Employee ID & your full name"
 			
 		elif action == 'showkra': #case to show kra
 			logging.info("inside showkra")
