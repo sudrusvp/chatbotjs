@@ -176,8 +176,18 @@ def updateKRA(KRAID, choice, newValue, db):
 
 	elif choice == "ratings":
 		try:
-			query = "UPDATE AppraisalRatingMaster set Rating = '%d' WHERE AppraisalRatingsID = (SELECT ARM.AppraisalRatingsID FROM EmployeeKRA EK, EmployeeKRARatings EKR, AppraisalRatingMaster ARM WHERE EK.EmpKRAID = EKR.EmpKRAID AND EKR.RatingID = ARM.AppraisalRatingsID AND EK.EmpKRAID = '%d')" % (int(newValue), int(KRAID))
+			query = "SELECT ARM.AppraisalRatingsID FROM EmployeeKRA EK, EmployeeKRARatings EKR, AppraisalRatingMaster ARM WHERE EK.EmpKRAID = EKR.EmpKRAID AND EKR.RatingID = ARM.AppraisalRatingsID AND EK.EmpKRAID = '%d'" % ( int(KRAID))
 			cursor.execute(query)
+			
+			results = cursor.fetchone()
+			
+			logging.info("results :"+str(results))
+
+			query2 = "UPDATE AppraisalRatingMaster set Rating = '%d' WHERE AppraisalRatingsID = '%d'" % (int(newValue),int(results[0]))
+
+			cursor = db.cursor()
+			cursor.execute(query2)
+
 			db.commit()
 		except:
 			db.rollback()
