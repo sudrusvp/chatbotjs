@@ -77,8 +77,10 @@ def kra():
 
 		elif action == "get_kra_title":
 
-			speech = db.getKraDescription(parameters['KRAID'],parameters['choice'].lower(), dbconnect)	
+			speech = db.getKraDescription(parameters['KRAID'],parameters['choice'].lower(), parameters['whose'].lower(), dbconnect)	
 
+		elif action == "update_yes" :
+			speech = db.updateKRA(parameters['KRAID'], parameters['choice'], parameters['newValue'], dbconnect)
 		else:
 			logging.info("returning default")
 			speech = "Hi, how may I help you"

@@ -109,7 +109,7 @@ def getSubordinates(employeeId, db):
 
 
 
-def getKraDescription(KRAID, choice, db):
+def getKraDescription(KRAID, choice, whose, db):
 	logging.info("Inside getKraDescription()")
 
 	cursor = db.cursor()	
@@ -146,8 +146,65 @@ def getKraDescription(KRAID, choice, db):
 		for row in results:
 			speech = speech + str(row[0])
 
+		if whose == 'me' or whose == 'my' or whose == 'mine' or whose == 'myself' and choice == 'self comment':
+			speech = speech + "<br>Do you want to update the "+str(choice)+"?"
+		elif whose == 'subordinate' and choice != 'self comment' :
+			speech = speech + "<br>Do you want to update the "+str(choice)+"?"
+
 		logging.info(speech)
 		return speech
+
+
+def updateKRA(KRAID, choice, newValue, db):
+	logging.info("Inside updateKRA()")
+
+	cursor = db.cursor()	
+
+	logging.info("cursor built")
+	logging.info("KRAID :" + str(KRAID))
+	logging.info("choice :" + str(choice))
+	logging.info("type of KRAID :" + str(type(KRAID)))
+	logging.info("newValue:"+ str(newValue))
+
+	if choice == "description":	
+		try:
+			cursor.execute("UPDATE EmployeeKRA set Description = '%s' WHERE EmpKRAID = '%d'" % (str(newValue), int(KRAID)))
+			db.commit()
+		except :
+			db.rollback()
+			return "Unable to update the Description"
+
+	elif choice == "ratings":
+		try:
+			query = "UPDATE AppraisalRatingMaster set Rating = '%d' WHERE AppraisalRatingsID = (SELECT ARM.AppraisalRatingsID FROM EmployeeKRA EK, EmployeeKRARatings EKR, AppraisalRatingMaster ARM WHERE EK.EmpKRAID = EKR.EmpKRAID AND EKR.RatingID = ARM.AppraisalRatingsID AND EK.EmpKRAID = '%d')" % (int(newValue), int(KRAID))
+			cursor.execute(query)
+			db.commit()
+		except:
+			db.rollback()
+			return "Unable to update the Rating"
+
+	elif choice == "self comment" :
+		try:
+			query = "UPDATE EmployeeKRASelfComments SET SelfComments = '%s' WHERE EmpKRAID = '%d'" % (str(newValue), int(KRAID))
+			cursor.execute(query)
+			db.commit()
+		except:
+			db.rollback()
+			return "Unable to update the Self Comments"
+
+	elif choice == "manager comment":
+		try:
+			query = ""
+			cursor.execute(query)
+			db.commit()
+		except:
+			db.rollback()
+			return "Unable to update the Manager's Comments"
+
+	else:
+		return "Incorect Choice"
+
+	return choice.title() + " updated successfully"
 
 
 
