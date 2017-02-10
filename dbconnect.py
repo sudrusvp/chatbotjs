@@ -109,15 +109,31 @@ def getSubordinates(employeeId, db):
 
 
 
-def getKraDescription(KRAID, db):
+def getKraDescription(KRAID, choice, db):
 	logging.info("Inside getKraDescription()")
 
 	cursor = db.cursor()	
 
 	logging.info("cursor built")
-	logging.info("KRAID :" + KRAID)
+	logging.info("KRAID :" + str(KRAID))
+	logging.info("choice :" + str(choice))
 	logging.info("type of KRAID :" + str(type(KRAID)))
-	cursor.execute("SELECT Description FROM EmployeeKRA WHERE EmpKRAID = '%d'" % (int(KRAID)))
+
+	if choice == "description":
+		cursor.execute("SELECT Description FROM EmployeeKRA WHERE EmpKRAID = '%d'" % (int(KRAID)))
+	elif choice == "ratings":
+
+		query = "SELECT ARM.Rating FROM EmployeeKRA EK, EmployeeKRARatings EKR, AppraisalRatingMaster ARM WHERE EK.EmpKRAID = EKR.EmpKRAID AND EKR.RatingID = ARM.AppraisalRatingsID AND EK.EmpKRAID = '%d'" % (int(KRAID))
+		cursor.execute(query)
+
+	elif choice == "self comment" :
+
+		query = "SELECT SelfComments FROM EmployeeKRASelfComments WHERE EmpKRAID = '%d'" % (int(KRAID))
+		cursor.execute(query)
+	elif choice == "manager comment":
+		cursor.execute()
+	else:
+		return "Incorect Choice"
 
 	count = cursor.rowcount
 
@@ -125,7 +141,7 @@ def getKraDescription(KRAID, db):
 		return "Incorect KRAID"
 	else:
 		results = cursor.fetchall()
-		speech = "KRA Descriptions : <br> "
+		speech = "KRA "+choice.title()+" : <br> "
 
 		for row in results:
 			speech = speech + str(row[0])
