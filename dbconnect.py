@@ -138,7 +138,7 @@ def getKraDescription(KRAID, choice, whose, db):
 	count = cursor.rowcount
 
 	if count < 1:
-		return str(choice)+" not assigned for this KRAID"
+		speech = str(choice)+" not assigned for this KRAID"
 	else:
 		results = cursor.fetchall()
 		speech = "KRA "+choice.title()+" : <br> "
@@ -146,13 +146,13 @@ def getKraDescription(KRAID, choice, whose, db):
 		for row in results:
 			speech = speech + str(row[0])
 
-		if whose == 'me' or whose == 'my' or whose == 'mine' or whose == 'myself' and choice == 'self comment':
-			speech = speech + "<br>Do you want to update the "+str(choice)+"?"
-		elif whose == 'subordinate' and choice != 'self comment' :
-			speech = speech + "<br>Do you want to update the "+str(choice)+"?"
+	if whose == 'me' or whose == 'my' or whose == 'mine' or whose == 'myself' and choice == 'self comment':
+		speech = speech + "<br><br>Do you want to update the "+str(choice)+"?"
+	elif whose == 'subordinate' and choice != 'self comment' :
+		speech = speech + "<br><br>Do you want to update the "+str(choice)+"?"
 
-		logging.info(speech)
-		return speech
+	logging.info(speech)
+	return speech
 
 
 def updateKRA(KRAID, choice, newValue, db):
@@ -214,7 +214,7 @@ def updateKRA(KRAID, choice, newValue, db):
 	else:
 		return "Incorect Choice"
 
-	return choice.title() + " updated successfully"
+	return choice.title() + " updated successfully to "+str(newValue)
 
 
 
