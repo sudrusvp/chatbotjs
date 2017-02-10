@@ -50,7 +50,8 @@ $(function(){
 		if (event.which == 13) {
 			event.preventDefault();
 
-			send();
+			if( $("#message").val() != "")
+				send();
 		}
 	});
 
