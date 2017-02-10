@@ -138,7 +138,7 @@ def getKraDescription(KRAID, choice, db):
 	count = cursor.rowcount
 
 	if count < 1:
-		return "Incorect KRAID"
+		return str(choice)+" not assigned for this KRAID"
 	else:
 		results = cursor.fetchall()
 		speech = "KRA "+choice.title()+" : <br> "
