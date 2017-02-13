@@ -228,7 +228,7 @@ def updateKRA(KRAID, choice, newValue, db):
 
 	return choice.title() + " updated successfully to "+str(newValue)
 
-def getCometencies(employeeId, db, subordinateId=None):
+def getCompetencies(employeeId, db, subordinateId=None):
 	logging.info("Inside getCompetencies()")
 
 	cursor = db.cursor()	
