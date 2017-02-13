@@ -34,7 +34,7 @@ def main_page():
 		response_message = json.loads(response_message)
 
 		if response_message["result"]['parameters'].has_key('result') :
-			return response_message["result"]['parameters']['result']
+			return srt(response_message["result"]['parameters']['result'])
 		else:
 			return response_message["result"]['fulfillment']['speech']
 	
