@@ -40,4 +40,5 @@ th,td{
 	position: relative;
 	z-index: 2;
 	color: #0057a3;
+	cursor:pointer;
 }

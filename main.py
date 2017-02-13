@@ -32,7 +32,11 @@ def main_page():
 		res = req.getresponse()
 		response_message = res.read()
 		response_message = json.loads(response_message)
-		return response_message["result"]['fulfillment']['speech']
+
+		if response_message["result"]['parameters']['result'] :
+			return response_message["result"]['parameters']['result']
+		else:
+			return response_message["result"]['fulfillment']['speech']
 	
 @app.route("/KRA", methods=['POST'])
 def kra():
