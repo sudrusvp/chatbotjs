@@ -58,6 +58,7 @@ $(function(){
 	$("#rec").click(function(event) {
 		switchRecognition();
 		event.preventDefault();
+		$("#rec").val("Listening...")
 	});
 
 	$("#send").click(function(event){
@@ -117,7 +118,7 @@ $(function(){
 		//$("#rec").html(recognition ? "<i class='fa fa-microphone-slash'></i>" : "<i class='fa fa-microphone'></i>")
 		$("#rec").attr('class', recognition ? "fa fa-microphone-slash micspan" : "fa fa-microphone micspan")
 
-		$("#message").val(recognition ? "Listening..." : "");
+		//$("#message").val(recognition ? "Listening..." : "");
 	}
 
 
