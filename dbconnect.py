@@ -275,5 +275,5 @@ def getCompetencies(employeeId, db, subordinateId=None):
 	# 						Enter the KRAID whose details you want to see"
 
 
-		return "These are the Competency titles"
+	return "These are the Competency titles"
 
