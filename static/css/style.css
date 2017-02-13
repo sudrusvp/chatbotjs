@@ -42,3 +42,16 @@ th,td{
 	color: #0057a3;
 	cursor:pointer;
 }
+
+.micspan_on {
+	float: right;
+	margin-right: 12px;
+	margin-top: -23px;
+	position: relative;
+	z-index: 2;
+	color: #fd2a2a;
+	cursor:pointer;
+}
+
+
+

@@ -116,7 +116,7 @@ $(function(){
 	function updateRec() {
 		//$("#rec").text(recognition ? "Stop" : "Speak");
 		//$("#rec").html(recognition ? "<i class='fa fa-microphone-slash'></i>" : "<i class='fa fa-microphone'></i>")
-		$("#rec").attr('class', recognition ? "fa fa-microphone-slash micspan fa-lg" : "fa fa-microphone micspan fa-lg")
+		$("#rec").attr('class', recognition ? "fa fa-microphone micspan_on fa-lg" : "fa fa-microphone micspan fa-lg")
 
 		//$("#message").val(recognition ? "Listening..." : "");
 	}
