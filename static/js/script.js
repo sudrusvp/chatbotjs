@@ -60,6 +60,10 @@ $(function(){
 		event.preventDefault();
 	});
 
+	$("send").click(function(event){
+		send()
+	})
+
 	var recognition;
 
 	function startRecognition() {
@@ -115,5 +119,7 @@ $(function(){
 
 		$("#message").val(recognition ? "Listening..." : "");
 	}
+
+
 
 });
