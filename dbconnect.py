@@ -42,7 +42,7 @@ def checkUser(firstname, lastname, employeeId, db):
 		return False
 
 
-def getKras(employeeId, db, subordinateId):
+def getKras(employeeId, db, subordinateId=None):
 	logging.info("Inside getKras()")
 
 	cursor = db.cursor()	
