@@ -228,5 +228,52 @@ def updateKRA(KRAID, choice, newValue, db):
 
 	return choice.title() + " updated successfully to "+str(newValue)
 
+def getCometencies(employeeId, db, subordinateId=None):
+	logging.info("Inside getCompetencies()")
 
+	cursor = db.cursor()	
+
+	logging.info("cursor built")
+
+	if subordinateId :
+		cursor.execute("SELECT COUNT(*) FROM UserMaster U WHERE U.ReportingManagerID = '%d' AND U.EmpCode = '%s'" % ( int(employeeId), str(subordinateId) ))
+
+		count = cursor.fetchone()
+
+		if count[0] < 1:
+			return "This employeee is not your subordiante"
+		else:
+			employeeId = subordinateId
+
+
+	# cursor.execute("SELECT K.EmpKRAID, K.KRATitle, K.Weight FROM EmployeeKRA K, UserMaster U WHERE U.EmpCode = '%s' AND K.EmpID = U.UserID" % (str(employeeId)))
+
+	# count = cursor.rowcount
+
+	# if count < 1:
+	# 	return "KRA is not set"
+	# else:
+	# 	results = cursor.fetchall()
+	# 	speech = "These are the KRA titles<br>\
+	# 				<table>\
+	# 					<tr>\
+	# 						<th>KRAID</th>\
+	# 						<th>Title</th>\
+	# 						<th>Weight</th>\
+	# 					</tr>"
+
+	# 	for row in results:
+
+	# 		speech = speech + "\
+	# 			<tr>\
+	# 				<td>"+str(row[0])+"</td>\
+	# 				<td>"+str(row[1])+"</td>\
+	# 				<td>"+str(row[2])+"</td>\
+	# 			</tr>"
+				
+	# 	speech = speech + "</table><br>\
+	# 						Enter the KRAID whose details you want to see"
+
+
+		return "These are the Competency titles"
 

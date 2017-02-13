@@ -83,8 +83,19 @@ def kra():
 
 			speech = db.getKraDescription(parameters['KRAID'],parameters['choice'].lower(), parameters['whose'].lower(), dbconnect)	
 
-		elif action == "update_yes" :
+		elif action == "update_yes_kra" :
 			speech = db.updateKRA(parameters['KRAID'], parameters['choice'].lower(), parameters['newValue'], dbconnect)
+		
+		elif action == "show_competencies":
+			logging.info("inside show_competencies")
+
+			if parameters['whose'].lower() == 'me' or parameters['whose'].lower() == 'my' or parameters['whose'].lower() == 'myself' :
+				speech = db.getCompetencies(parameters['employeeId'],dbconnect)
+
+			elif parameters['whose'].lower() == 'subordinate' or parameters['whose'].lower() == 'subordinates':
+				speech = db.getSubordinates(parameters['employeeId'], dbconnect)
+			else:
+				speech = "I didnt get that.."
 		else:
 			logging.info("returning default")
 			speech = "Hi, how may I help you"
