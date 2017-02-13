@@ -56,7 +56,7 @@ def getKras(employeeId, db, subordinateId):
 
 		if count[0] < 1:
 			return "This employeee is not your subordiante"
-		else
+		else:
 			employeeId = subordinateId
 
 
