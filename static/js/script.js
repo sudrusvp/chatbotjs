@@ -60,7 +60,7 @@ $(function(){
 		event.preventDefault();
 	});
 
-	$("send").click(function(event){
+	$("#send").click(function(event){
 		send()
 	})
 
