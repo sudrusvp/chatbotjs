@@ -38,7 +38,6 @@ def getCompetencies(employeeId, db, subordinateId=None):
 							<th>ID</th>\
 							<th>Title</th>\
 							<th>Desired Level</th>\
-							<th>Rating</th>\
 						</tr>"
 
 		for row in result1:
@@ -60,14 +59,6 @@ def getCompetencies(employeeId, db, subordinateId=None):
 					<td>"+str(int(row[2]))+"</td>\
 					<td>"+str(result2[0])+"</td>\
 					<td>Level "+str(row[1])+"</td>\
-					<td>"
-
-			# if result3:
-			# 	speech = speech+str(result3[0])
-			# else :
-			# 	speech = speech+"NOT SET"
-
-			speech = speech+"</td>\
 				</tr>"
 				
 		speech = speech + "</table><br>Enter the ID whose details you want to see"
@@ -117,7 +108,7 @@ def getCompetencies_details(EmpCompetencyID, db):
 	count = cursor.rowcount
 	
 	logging.info("count :"+str(count))
-	
+
 	if count < 1:
 		return "There are no details available for this competency"
 	else:
@@ -126,6 +117,6 @@ def getCompetencies_details(EmpCompetencyID, db):
 		logging.info("result :"+str(result))
 		logging.info(result)
 
-		speech = "Ratings : "+result[0]
+		speech = "Ratings : "+str(result[0])
 
 		return speech
