@@ -24,7 +24,7 @@ def getCompetencies(employeeId, db, subordinateId=None):
 	cursor2 = db.cursor()	
 	cursor3 = db.cursor()
 
-	cursor1.execute("SELECT C.CompetencyID, C.DesiredLevelID FROM EmployeeCompetency C, UserMaster U WHERE U.EmpCode = '%s' AND C.EmpID = U.UserID" % (str(employeeId)))
+	cursor1.execute("SELECT C.CompetencyID, C.DesiredLevelID, C.EmpCompetencyID FROM EmployeeCompetency C, UserMaster U WHERE U.EmpCode = '%s' AND C.EmpID = U.UserID" % (str(employeeId)))
 
 	count = cursor1.rowcount
 
@@ -35,22 +35,28 @@ def getCompetencies(employeeId, db, subordinateId=None):
 		speech = "These are the competencies<br>\
 					<table>\
 						<tr>\
-							<th>CompetencyID</th>\
+							<th>ID</th>\
 							<th>Title</th>\
 							<th>Desired Level</th>\
+							<th>Rating</th>\
 						</tr>"
 
 		for row in result1:
 
 			cursor2.execute("SELECT Title FROM CustomerCompetencyMaster WHERE CompetencyID = '%d'" % (int(row[0])))
 
+			query = "SELECT ARM.Rating FROM EmployeeCompetency EC, EmployeeCompetencyRatings ECR, AppraisalRatingMaster ARM WHERE EC.EmpCompetencyID = ECR.EmpCompetencyID AND ECR.RatingID = ARM.AppraisalRatingsID AND EC.EmpCompetencyID = '%d'" % (int(row[2]))
+			cursor3.execute(query)
+
 			result2 = cursor2.fetchone()
+			result3 = cursor3.fetchone()
 
 			speech = speech + "\
 				<tr>\
-					<td>"+str(row[0])+"</td>\
+					<td>"+str(int(row[0]))+"</td>\
 					<td>"+str(result2[0])+"</td>\
 					<td>Level "+str(row[1])+"</td>\
+					<td>"+str(result3[0])+"</td>\
 				</tr>"
 				
 		speech = speech + "</table>"
