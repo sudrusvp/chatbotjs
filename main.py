@@ -8,6 +8,8 @@ import json
 import logging
 import MySQLdb
 import dbconnect as db
+import kras
+import competencies as com
 import apiai
 
 app = Flask(__name__, static_url_path='/static')
@@ -58,7 +60,7 @@ def kra():
 		if action == 'getname': #case for authentication
 
 			logging.info("inside getname")
-			if db.checkUser(parameters['firstname'].title(), parameters['lastname'].title(), parameters['employeeId'], dbconnect) :
+			if kras.checkUser(parameters['firstname'].title(), parameters['lastname'].title(), parameters['employeeId'], dbconnect) :
 				logging.info("returning True")
 				speech = "Welcome "+parameters['firstname']+" "+parameters['lastname']+" <br>How may I help you?"
 			else:
@@ -70,30 +72,30 @@ def kra():
 			logging.info("inside showkra")
 
 			if parameters['whose'].lower() == 'me' or parameters['whose'].lower() == 'my' or parameters['whose'].lower() == 'myself' :
-				speech = db.getKras(parameters['employeeId'],dbconnect)
+				speech = kras.getKras(parameters['employeeId'],dbconnect)
 
 			elif parameters['whose'].lower() == 'subordinate' or parameters['whose'].lower() == 'subordinates':
-				speech = db.getSubordinates(parameters['employeeId'], dbconnect)
+				speech = kras.getSubordinates(parameters['employeeId'], dbconnect)
 			else:
 				speech = "I didnt get that.."
 		elif action == 'showkra_of_subordinate':
-			speech = db.getKras(parameters['employeeId'], dbconnect,parameters['subordinateId'])
+			speech = kras.getKras(parameters['employeeId'], dbconnect,parameters['subordinateId'])
 
 		elif action == "get_kra_title":
 
-			speech = db.getKraDescription(parameters['KRAID'],parameters['choice'].lower(), parameters['whose'].lower(), dbconnect)	
+			speech = kras.getKraDescription(parameters['KRAID'],parameters['choice'].lower(), parameters['whose'].lower(), dbconnect)	
 
 		elif action == "update_yes_kra" :
-			speech = db.updateKRA(parameters['KRAID'], parameters['choice'].lower(), parameters['newValue'], dbconnect)
+			speech = kras.updateKRA(parameters['KRAID'], parameters['choice'].lower(), parameters['newValue'], dbconnect)
 		
 		elif action == "show_competencies":
 			logging.info("inside show_competencies")
 
 			if parameters['whose'].lower() == 'me' or parameters['whose'].lower() == 'my' or parameters['whose'].lower() == 'myself' :
-				speech = db.getCompetencies(parameters['employeeId'],dbconnect)
+				speech = com.getCompetencies(parameters['employeeId'],dbconnect)
 
 			elif parameters['whose'].lower() == 'subordinate' or parameters['whose'].lower() == 'subordinates':
-				speech = db.getSubordinates(parameters['employeeId'], dbconnect)
+				speech = com.getSubordinates(parameters['employeeId'], dbconnect)
 			else:
 				speech = "I didnt get that.."
 		else:
