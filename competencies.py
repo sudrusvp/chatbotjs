@@ -10,6 +10,7 @@ def getCompetencies(employeeId, db, subordinateId=None):
 	logging.info("cursor built")
 
 	if subordinateId :
+		logging.info("|"+str(employeeId)+"|")
 		cursor.execute("SELECT COUNT(*) FROM UserMaster U WHERE U.ReportingManagerID = '%d' AND U.EmpCode = '%s'" % ( int(employeeId), str(subordinateId) ))
 
 		count = cursor.fetchone()
