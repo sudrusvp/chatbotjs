@@ -98,6 +98,14 @@ def kra():
 				speech = com.getSubordinates(parameters['employeeId'], dbconnect)
 			else:
 				speech = "I didnt get that.."
+
+		elif action == "show_competencies_of_subordiante":
+			
+			speech = com.getCompetencies(parameters['employeeId'],dbconnect,parameters['subordinateId'])
+
+		elif action == "get_competencies_details":
+			speech = com.getCompetencies_details(parameters['EmpCompetencyID'], dbconnect)
+
 		else:
 			logging.info("returning default")
 			speech = "Hi, how may I help you"

@@ -57,7 +57,7 @@ def getCompetencies(employeeId, db, subordinateId=None):
 
 			speech = speech + "\
 				<tr>\
-					<td>"+str(int(row[0]))+"</td>\
+					<td>"+str(int(row[2]))+"</td>\
 					<td>"+str(result2[0])+"</td>\
 					<td>Level "+str(row[1])+"</td>\
 					<td>"
@@ -70,7 +70,7 @@ def getCompetencies(employeeId, db, subordinateId=None):
 			speech = speech+"</td>\
 				</tr>"
 				
-		speech = speech + "</table>"
+		speech = speech + "</table><br>Enter the ID whose details you want to see"
 
 		return speech
 
@@ -102,3 +102,23 @@ def getSubordinates(employeeId, db):
 							Enter the Employee code of the subordinate, whose competencies you want to see"
 									
 		return speech
+
+
+def getCompetencies_details(EmpCompetencyID, db):
+
+	logging.info("Inside getCompetencies()")
+
+	cursor = db.cursor()	
+
+	logging.info("cursor built")
+
+	query = "SELECT ARM.Rating FROM EmployeeCompetencyRatings ECR, AppraisalRatingMaster ARM WHERE ECR.RatingID = ARM.AppraisalRatingsID AND ECR.EmpCompetencyID = '%d'" % (int(EmpCompetencyID))
+	cursor.execute(query)
+	result = cursor.fetchone()
+
+	logging.info("result :"+str(result))
+	logging.info(result)
+
+	speech = "Ratings : "+result[0]
+
+	return speech
