@@ -114,11 +114,18 @@ def getCompetencies_details(EmpCompetencyID, db):
 
 	query = "SELECT ARM.Rating FROM EmployeeCompetencyRatings ECR, AppraisalRatingMaster ARM WHERE ECR.RatingID = ARM.AppraisalRatingsID AND ECR.EmpCompetencyID = '%d'" % (int(EmpCompetencyID))
 	cursor.execute(query)
-	result = cursor.fetchone()
+	count = cursor.rowcount
+	
+	logging.info("count :"+str(count))
+	
+	if count < 1:
+		return "There are no details available for this competency"
+	else:
+		result = cursor.fetchone()
 
-	logging.info("result :"+str(result))
-	logging.info(result)
+		logging.info("result :"+str(result))
+		logging.info(result)
 
-	speech = "Ratings : "+result[0]
+		speech = "Ratings : "+result[0]
 
-	return speech
+		return speech
