@@ -45,20 +45,30 @@ def getCompetencies(employeeId, db, subordinateId=None):
 
 			cursor2.execute("SELECT Title FROM CustomerCompetencyMaster WHERE CompetencyID = '%d'" % (int(row[0])))
 
-			query = "SELECT ARM.Rating FROM EmployeeCompetency EC, EmployeeCompetencyRatings ECR, AppraisalRatingMaster ARM WHERE EC.EmpCompetencyID = ECR.EmpCompetencyID AND ECR.RatingID = ARM.AppraisalRatingsID AND EC.EmpCompetencyID = '%d'" % (int(row[2]))
+			query = "SELECT ARM.Rating FROM EmployeeCompetency EC, EmployeeCompetencyRatings ECR, Tbl_AppraisalRatingMaster ARM WHERE EC.EmpCompetencyID = ECR.EmpCompetencyID AND ECR.RatingID = ARM.AppraisalRatingsID AND EC.EmpCompetencyID = '%d'" % (int(row[2]))
+			
+
 			cursor3.execute(query)
 
 			result2 = cursor2.fetchone()
 			result3 = cursor3.fetchone()
-			if not result3:
-				result3[0] = "NOT SET"
+			
+			logging.info("result3 :"+str(result3))
+			logging.info(result3)
 
 			speech = speech + "\
 				<tr>\
 					<td>"+str(int(row[0]))+"</td>\
 					<td>"+str(result2[0])+"</td>\
 					<td>Level "+str(row[1])+"</td>\
-					<td>"+str(result3[0])+"</td>\
+					<td>"
+
+			if result3:
+				speech = speech+str(result3[0])
+			else :
+				speech = speech+"NOT SET"
+
+			speech = speech+"</td>\
 				</tr>"
 				
 		speech = speech + "</table>"
