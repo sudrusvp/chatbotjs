@@ -24,7 +24,7 @@ def getCompetencies(employeeId, db, subordinateId=None):
 	#cursor2 = db.cursor()	
 	#cursor3 = db.cursor()
 
-	cursor1.execute("SELECT C.CompetencyID, C.DesiredLevelID, C.EmpCompetencyID FROM EmployeeCompetency C, UserMaster U WHERE U.EmpCode = '%s' AND C.EmpID = U.UserID" % (str(employeeId)))
+	cursor1.execute("SELECT C.CompetencyID, C.DesiredLevelID, C.EmpCompetencyID FROM EmployeeCompetency C, UserMaster U WHERE U.EmpCode = '%s' AND C.EmpID = U.UserID AND C.AppraisalCycleID = 12" % (str(employeeId)))
 
 	count = cursor1.rowcount
 
@@ -110,7 +110,7 @@ def getCompetencies_details(EmpCompetencyID, db):
 	logging.info("count :"+str(count))
 
 	if count < 1:
-		return "There are no details available for this competency"
+		speech = "There are no ratings available for this competency"
 	else:
 		result = cursor.fetchone()
 
@@ -119,4 +119,19 @@ def getCompetencies_details(EmpCompetencyID, db):
 
 		speech = "Ratings : "+str(result[0])
 
-		return speech
+	query = "SELECT SelfComments FROM EmployeeCompetencySelfComments WHERE EmpCompetencyID = '%d'" % (int(EmpCompetencyID))
+	cursor.execute(query)
+	count = cursor.rowcount
+
+	if count < 1:
+		speech = speech + "<br>There are no selfcomments available for this competency"
+	else:
+		result = cursor.fetchone()
+
+		logging.info("result :"+str(result))
+		logging.info(result)
+
+		speech = speech +"<br>Self Comments : "+str(result[0])
+
+	
+	return speech
