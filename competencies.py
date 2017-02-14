@@ -46,7 +46,7 @@ def getCompetencies(employeeId, db, subordinateId=None):
 			cursor1.execute("SELECT Title FROM CustomerCompetencyMaster WHERE CompetencyID = '%d'" % (int(row[0])))
 			result2 = cursor1.fetchone()
 			
-			query = "SELECT ARM.Rating FROM EmployeeCompetency EC, EmployeeCompetencyRatings ECR, AppraisalRatingMaster ARM WHERE EC.EmpCompetencyID = ECR.EmpCompetencyID AND ECR.RatingID = ARM.AppraisalRatingsID AND EC.EmpCompetencyID = '%d'" % (int(row[2]))
+			query = "SELECT ARM.Rating FROM EmployeeCompetencyRatings ECR, AppraisalRatingMaster ARM WHERE ECR.RatingID = ARM.AppraisalRatingsID AND ECR.EmpCompetencyID = '%d'" % (int(row[2]))
 			
 
 			cursor1.execute(query)
