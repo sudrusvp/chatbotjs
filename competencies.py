@@ -50,6 +50,8 @@ def getCompetencies(employeeId, db, subordinateId=None):
 
 			result2 = cursor2.fetchone()
 			result3 = cursor3.fetchone()
+			if not result3[0]:
+				result3[0] = "NOT SET"
 
 			speech = speech + "\
 				<tr>\
