@@ -21,8 +21,8 @@ def getCompetencies(employeeId, db, subordinateId=None):
 
 
 	cursor1 = db.cursor()	
-	cursor2 = db.cursor()	
-	cursor3 = db.cursor()
+	#cursor2 = db.cursor()	
+	#cursor3 = db.cursor()
 
 	cursor1.execute("SELECT C.CompetencyID, C.DesiredLevelID, C.EmpCompetencyID FROM EmployeeCompetency C, UserMaster U WHERE U.EmpCode = '%s' AND C.EmpID = U.UserID" % (str(employeeId)))
 
@@ -43,18 +43,18 @@ def getCompetencies(employeeId, db, subordinateId=None):
 
 		for row in result1:
 
-			cursor2.execute("SELECT Title FROM CustomerCompetencyMaster WHERE CompetencyID = '%d'" % (int(row[0])))
-
+			cursor1.execute("SELECT Title FROM CustomerCompetencyMaster WHERE CompetencyID = '%d'" % (int(row[0])))
+			result2 = cursor1.fetchone()
+			
 			query = "SELECT ARM.Rating FROM EmployeeCompetency EC, EmployeeCompetencyRatings ECR, AppraisalRatingMaster ARM WHERE EC.EmpCompetencyID = ECR.EmpCompetencyID AND ECR.RatingID = ARM.AppraisalRatingsID AND EC.EmpCompetencyID = '%d'" % (int(row[2]))
 			
 
-			cursor3.execute(query)
+			cursor1.execute(query)
 
-			result2 = cursor2.fetchone()
-			result3 = cursor3.fetchone()
+			result3 = cursor1.fetchone()
 			
 			logging.info("competencyID: "+ str(row[2]))
-			
+
 			logging.info("result3 :"+str(result3))
 			logging.info(result3)
 
