@@ -99,7 +99,7 @@ def kra():
 			else:
 				speech = "I didnt get that.."
 
-		elif action == "show_competencies_of_subordiante":
+		elif action == "show_competencies_of_subordinate":
 			
 			speech = com.getCompetencies(parameters['employeeId'],dbconnect,parameters['subordinateId'])
 

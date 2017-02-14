@@ -124,7 +124,7 @@ def getCompetencies_details(EmpCompetencyID, db):
 	count = cursor.rowcount
 
 	if count < 1:
-		speech = speech + "<br>There are no selfcomments available for this competency"
+		speech = speech + "<br>There are no self comments available for this competency"
 	else:
 		result = cursor.fetchone()
 
