@@ -60,6 +60,21 @@ body{
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
 }
 
+.sent:after {
+	border-radius: 20px / 5px;
+	content: '';
+	display: block;
+	position: absolute;
+	border: 8px solid transparent;
+	bottom: 1px;	
+	left: auto;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	border-left: 10px solid rgba(255, 255, 255, 0.10);
+ 	right: -17px;
+
+}
+
 .received{
 	margin: 10px 0px;
 	padding: 10px;
@@ -69,6 +84,20 @@ body{
 	border-radius: 5px;
 	display: inline-block;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+}
+
+.received:after {
+  	border-radius: 20px / 5px;
+  	content: '';
+  	display: block;
+  	position: absolute;
+
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid rgba(255, 255, 255, 0.1);
+  	bottom: 1px;
+  	transform: rotateZ(-90deg);
+  	left: -15px;
 }
 
 .chatheader{
