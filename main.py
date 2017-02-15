@@ -63,11 +63,13 @@ def kra():
 			logging.info("inside getname")
 			if kras.checkUser(parameters['firstname'].title(), parameters['lastname'].title(), '{0:06}'.format(int(parameters['employeeId'])), dbconnect) :
 				logging.info("returning True")
-				speech = "Welcome "+parameters['firstname']+" "+parameters['lastname']+" <br>How may I help you?"
+				webhook_res = { "speech" : "Welcome "+parameters['firstname']+" "+parameters['lastname']+" <br>How may I help you?",
+								"contextOut": [{"name":"showkra", "lifespan":555, "parameters":{ "firstname": parameters['firstname'], "lastname" : parameters['lastname'], "employeeId" : parameters['employeeId'] }}] }
 			else:
 				logging.info("returning False")
 
-				speech = "The Employee ID does not match with the name entered. <BR><BR> Please enter the correct Employee ID & your full name"
+				webhook_res = { "speech" : "The Employee ID does not match with the name entered. <BR><BR> Please enter the correct Employee ID & your full name",
+								"contextOut": [{"name":"getname", "lifespan":555, "parameters":{}}] }
 			
 		elif action == 'showkra': #case to show kra
 			logging.info("inside showkra")
@@ -113,11 +115,19 @@ def kra():
 
 		dbconnect.close()
 
-		req = {
-				"speech": speech,
-				"displayText": speech,
-				"data": {"speech": speech},
-			}
+		if webhook_res:
+			req = {
+					"speech": webhook_res["speech"],
+					"displayText": speech,
+					"data": {"speech": speech},
+					"contextOut" : webhook_res["contextOut"]
+				}
+		else :
+			req = {
+					"speech": speech,
+					"displayText": speech,
+					"data": {"speech": speech},
+				}
 		req = json.dumps(req, indent=4)
 		r = make_response(req)
 		r.headers['Content-Type'] = 'application/json'
