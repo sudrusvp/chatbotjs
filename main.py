@@ -118,8 +118,8 @@ def kra():
 		if webhook_res:
 			req = {
 					"speech": webhook_res["speech"],
-					"displayText": speech,
-					"data": {"speech": speech},
+					"displayText": webhook_res["speech"],
+					"data": {"speech": webhook_res["speech"] },
 					"contextOut" : webhook_res["contextOut"]
 				}
 		else :
