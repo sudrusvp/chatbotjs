@@ -45,7 +45,11 @@ def getKras(employeeId, db, subordinateId=None):
 	count = cursor.rowcount
 
 	if count < 1:
-		return "KRA is not set"
+		#return "KRA is not set"
+		web ={"speech" : "KRA is not set",
+				"contextOut" : "show_kra"}
+		return web
+
 	else:
 		results = cursor.fetchall()
 		speech = "These are the KRA titles<br>\
@@ -67,8 +71,9 @@ def getKras(employeeId, db, subordinateId=None):
 				
 		speech = speech + "</table><br>\
 							Enter the KRAID whose details you want to see"
-
-		return speech
+		web ={"speech" : speech,
+				"contextOut" : "get_kra_title"}
+		return web
 
 
 def getSubordinates(employeeId, db):

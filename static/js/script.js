@@ -13,7 +13,10 @@ $(function(){
 			"sessionID" : sessionID
 		};
 
-		$('.chatdiv').append(sentHead+data.message+tail);
+		//$('.chatdiv').append(sentHead+data.message+tail);
+
+		$(sentHead+data.message+tail).hide().appendTo('.chatdiv').show("puff", {times : 3}, 200);
+
 		$(".chatdiv").animate({ scrollTop: $('.chatdiv').prop("scrollHeight")}, 1000);
 		$("#message").val("");
 

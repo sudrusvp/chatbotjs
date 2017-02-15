@@ -74,23 +74,34 @@ def kra():
 		elif action == 'showkra': #case to show kra
 			logging.info("inside showkra")
 
-			if parameters['whose'].lower() == 'me' or parameters['whose'].lower() == 'my' or parameters['whose'].lower() == 'myself' :
+			if parameters['whose'].lower() == 'me':
 				speech = kras.getKras('{0:06}'.format(int(parameters['employeeId'])),dbconnect)
+				webhook_res = { "speech" : speech['speech'],
+								"contextOut": [{"name":speech['contextOut'], "lifespan":555, "parameters":{ "firstname": parameters['firstname'], "lastname" : parameters['lastname'], "employeeId" : parameters['employeeId'], "whose" : parameters['whose'] } }] }
 
-			elif parameters['whose'].lower() == 'subordinate' or parameters['whose'].lower() == 'subordinates':
+
+			elif parameters['whose'].lower() == 'subordinate':
 				speech = kras.getSubordinates('{0:06}'.format(int(parameters['employeeId'])), dbconnect)
+				webhook_res = { "speech" : speech,
+								"contextOut": [{"name":"show_kra_sub", "lifespan":555, "parameters":{ "firstname": parameters['firstname'], "lastname" : parameters['lastname'], "employeeId" : parameters['employeeId'], "whose" : parameters['whose'] } }] }
+
 			else:
-				speech = "I didnt get that.."
+				webhook_res = { "speech" : "I didnt get that.. <BR> Please try entering correctly, Whose KRAs do you want to see? (yourself / subordinate)",
+								"contextOut": [{"name":"showkra", "lifespan":555, "parameters":{ "firstname": parameters['firstname'], "lastname" : parameters['lastname'], "employeeId" : parameters['employeeId'] } }] }
+
 		elif action == 'showkra_of_subordinate':
 			speech = kras.getKras('{0:06}'.format(int(parameters['employeeId'])), dbconnect, '{0:06}'.format(int(parameters['subordinateId'])))
 
 		elif action == "get_kra_title":
-
 			speech = kras.getKraDescription(parameters['KRAID'],parameters['choice'].lower(), parameters['whose'].lower(), dbconnect)	
 
 		elif action == "update_yes_kra" :
 			speech = kras.updateKRA(parameters['KRAID'], parameters['choice'].lower(), parameters['newValue'], dbconnect)
 		
+
+
+
+
 		elif action == "show_competencies":
 			logging.info("inside show_competencies")
 
