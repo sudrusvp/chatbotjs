@@ -47,7 +47,6 @@ body{
 	color: #fff;
 	margin: 1px;
 	border-radius: 0px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
 }
 
 .sent{
@@ -57,6 +56,7 @@ body{
 	color: white;
 	border-radius: 5px;
 	display: inline-block;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
 }
 
 .received{
@@ -66,6 +66,7 @@ body{
 	color: white;
 	border-radius: 5px;
 	display: inline-block;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
 }
 
 .chatheader{
