@@ -96,8 +96,7 @@ body{
     border-bottom: 10px solid transparent;
     border-right: 10px solid rgba(255, 255, 255, 0.1);
   	bottom: 1px;
-  	transform: rotateZ(-90deg);
-  	left: -15px;
+  	left: -10px;
 }
 
 .chatheader{
