@@ -1,7 +1,7 @@
 body{
     background: linear-gradient(120deg, #4425cc, #a9778f);
-    overflow: hidden;
-    margin-bottom: 500px;
+ 	margin-bottom: 100px;
+ 	overflow-x: hidden;
 }
 
 .chatdiv{
