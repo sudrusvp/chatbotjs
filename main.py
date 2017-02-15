@@ -72,14 +72,14 @@ def kra():
 			logging.info("inside showkra")
 
 			if parameters['whose'].lower() == 'me' or parameters['whose'].lower() == 'my' or parameters['whose'].lower() == 'myself' :
-				speech = kras.getKras(parameters['employeeId'],dbconnect)
+				speech = kras.getKras('{0:06}'.format(int(parameters['employeeId'])),dbconnect)
 
 			elif parameters['whose'].lower() == 'subordinate' or parameters['whose'].lower() == 'subordinates':
-				speech = kras.getSubordinates(parameters['employeeId'], dbconnect)
+				speech = kras.getSubordinates('{0:06}'.format(int(parameters['employeeId'])), dbconnect)
 			else:
 				speech = "I didnt get that.."
 		elif action == 'showkra_of_subordinate':
-			speech = kras.getKras(parameters['employeeId'], dbconnect,parameters['subordinateId'])
+			speech = kras.getKras('{0:06}'.format(int(parameters['employeeId'])), dbconnect, '{0:06}'.format(int(parameters['subordinateId'])))
 
 		elif action == "get_kra_title":
 
@@ -92,16 +92,16 @@ def kra():
 			logging.info("inside show_competencies")
 
 			if parameters['whose'].lower() == 'me' or parameters['whose'].lower() == 'my' or parameters['whose'].lower() == 'myself' :
-				speech = com.getCompetencies(parameters['employeeId'],dbconnect)
+				speech = com.getCompetencies('{0:06}'.format(int(parameters['employeeId'])),dbconnect)
 
 			elif parameters['whose'].lower() == 'subordinate' or parameters['whose'].lower() == 'subordinates':
-				speech = com.getSubordinates(parameters['employeeId'], dbconnect)
+				speech = com.getSubordinates('{0:06}'.format(int(parameters['employeeId'])), dbconnect)
 			else:
 				speech = "I didnt get that.."
 
 		elif action == "show_competencies_of_subordinate":
 			
-			speech = com.getCompetencies(parameters['employeeId'],dbconnect,parameters['subordinateId'])
+			speech = com.getCompetencies('{0:06}'.format(int(parameters['employeeId'])), dbconnect, '{0:06}'.format(int(parameters['subordinateId'])))
 
 		elif action == "get_competencies_details":
 			speech = com.getCompetencies_details(parameters['EmpCompetencyID'], dbconnect)
