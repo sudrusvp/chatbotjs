@@ -2,13 +2,13 @@ import logging
 import os
 import MySQLdb
 
-def checkUser(firstname, lastname, employeeId, db):
+def checkUser(parameters, db):
 	logging.info("Inside checkUser()")
 
 	cursor = db.cursor()
 
 	logging.info("cursor built")
-	cursor.execute("SELECT * FROM UserMaster WHERE FirstName = '%s' AND LastName = '%s' AND EmpCode = '%s'" % (firstname, lastname, employeeId))
+	cursor.execute("SELECT * FROM UserMaster WHERE FirstName = '%s' AND LastName = '%s' AND EmpCode = '%s'" % (parameters['firstname'].title(), parameters['lastname'].title(), '{0:06}'.format(int(parameters['employeeId']))))
 
 	logging.info("query executed")
 	count = cursor.rowcount
@@ -17,28 +17,22 @@ def checkUser(firstname, lastname, employeeId, db):
 	logging.info("count: "+str(count))
 
 	if count > 0:
-		return True
+		logging.info("returning True")
+		return { "speech" : "Welcome "+parameters['firstname'].title()+" "+parameters['lastname'].title()+" <br>How may I help you?",
+				"contextOut": [{"name":"showkra", "lifespan":555, "parameters":{ "firstname": parameters['firstname'], "lastname" : parameters['lastname'], "employeeId" : '{0:06}'.format(int(parameters['employeeId'])) }}] }
 	else :
-		return False
+		logging.info("returning False")
+
+		return { "speech" : "The Employee ID does not match with the name entered. <BR><BR> Please enter the correct Employee ID & your full name",
+						"contextOut": [{"name":"getname", "lifespan":555, "parameters":{}}] }
 
 
-def getKras(employeeId, db, subordinateId=None):
+def getKras(employeeId, parameters, db):
 	logging.info("Inside getKras()")
 
 	cursor = db.cursor()	
 
 	logging.info("cursor built")
-
-	if subordinateId :
-		cursor.execute("SELECT COUNT(*) FROM UserMaster U WHERE U.ReportingManagerID = '%d' AND U.EmpCode = '%s'" % ( int(employeeId), str(subordinateId) ))
-
-		count = cursor.fetchone()
-
-		if count[0] < 1:
-			return "This employeee is not your subordiante"
-		else:
-			employeeId = subordinateId
-
 
 	cursor.execute("SELECT K.EmpKRAID, K.KRATitle, K.Weight FROM EmployeeKRA K, UserMaster U WHERE U.EmpCode = '%s' AND K.EmpID = U.UserID" % (str(employeeId)))
 
@@ -46,9 +40,8 @@ def getKras(employeeId, db, subordinateId=None):
 
 	if count < 1:
 		#return "KRA is not set"
-		web ={"speech" : "KRA is not set",
-				"contextOut" : "show_kra"}
-		return web
+		return { "speech" : "Your KRAs is not set. <br>How may I help you?", 
+				"contextOut": [{"name":"showkra", "lifespan":555, "parameters": parameters}] }
 
 	else:
 		results = cursor.fetchall()
@@ -71,12 +64,66 @@ def getKras(employeeId, db, subordinateId=None):
 				
 		speech = speech + "</table><br>\
 							Enter the KRAID whose details you want to see"
-		web ={"speech" : speech,
-				"contextOut" : "get_kra_title"}
-		return web
+		
+		return { "speech" : speech,
+		"contextOut": [{"name":"get_kra_title", "lifespan":555, "parameters": parameters}]}
+
+def getKraSubordinate(employeeId, subordinateId, parameters, db):
+	cursor = db.cursor()	
+
+	logging.info("cursor built")
+	
+	if subordinateId :
+		cursor.execute("SELECT COUNT(*) FROM UserMaster U WHERE U.ReportingManagerID = '%d' AND U.EmpCode = '%s'" % ( int(employeeId), str(subordinateId) ))
+
+		count = cursor.fetchone()
+
+		if count[0] < 1:
+
+			return { "speech" : "This employeee is not your subordiante. Please Enter the subordinateId correctly.",
+						"contextOut": [{"name":"show_kra_sub", "lifespan":555, "parameters":{ "firstname": parameters['firstname'], "lastname" : parameters['lastname'], "employeeId" : employeeId, "whose" : parameters['whose'] , "subordinateId" : ""}}] }
+
+		else:
+			employeeId = subordinateId
+
+			cursor.execute("SELECT K.EmpKRAID, K.KRATitle, K.Weight FROM EmployeeKRA K, UserMaster U WHERE U.EmpCode = '%s' AND K.EmpID = U.UserID" % (str(employeeId)))
+
+			count = cursor.rowcount
+
+			if count < 1:
+				#return "KRA is not set"
+				del parameters["subordinateID"]
+
+				return { "speech" : "KRAs for this subordinate is not set <br> How may I help you?", 
+						"contextOut": [{"name":"showkra", "lifespan":555, "parameters" : parameters}] }
+
+			else:
+				results = cursor.fetchall()
+				speech = "These are the KRA titles<br>\
+							<table>\
+								<tr>\
+									<th>KRAID</th>\
+									<th>Title</th>\
+									<th>Weight</th>\
+								</tr>"
+
+				for row in results:
+
+					speech = speech + "\
+						<tr>\
+							<td>"+str(row[0])+"</td>\
+							<td>"+str(row[1])+"</td>\
+							<td>"+str(row[2])+"</td>\
+						</tr>"
+						
+				speech = speech + "</table><br>\
+									Enter the KRAID whose details you want to see"
+				
+				return { "speech" : speech,
+				"contextOut": [{"name":"get_kra_title", "lifespan":555, "parameters": parameters}]}
 
 
-def getSubordinates(employeeId, db):
+def getSubordinates(employeeId, parameters, db):
 	logging.info("Inside getSubordinates()")
 
 	cursor = db.cursor()	
@@ -88,7 +135,9 @@ def getSubordinates(employeeId, db):
 	count = cursor.rowcount
 
 	if count < 1:
-		return "You dont have any subordinates"
+		return { "speech" : "You dont have any subordinates",
+		"contextOut": [{"name":"showkra", "lifespan":555, "parameters":{ "firstname": parameters['firstname'], "lastname" : parameters['lastname'], "employeeId" : parameters['employeeId'] , "whose" : "" } }] }
+			
 	else:
 		results = cursor.fetchall()
 		speech = "These are your subordinates: <br>\
@@ -101,13 +150,14 @@ def getSubordinates(employeeId, db):
 
 		speech = speech + "</table>\
 							Enter the Employee code of the subordinate, whose KRA you want to see"
-									
-		return speech
+						
 
+		return { "speech" : speech,
+				"contextOut": [{"name":"show_kra_sub", "lifespan":555, "parameters": parameters }] }
+			
 
-
-def getKraDescription(KRAID, choice, whose, db):
-	logging.info("Inside getKraDescription()")
+def getKraTitleDetails(KRAID, choice, whose, parameters, db):
+	logging.info("Inside getKraTitleDetails()")
 
 	cursor = db.cursor()	
 
@@ -118,24 +168,27 @@ def getKraDescription(KRAID, choice, whose, db):
 
 	if choice == "description":
 		cursor.execute("SELECT Description FROM EmployeeKRA WHERE EmpKRAID = '%d'" % (int(KRAID)))
+	
 	elif choice == "ratings":
-
 		query = "SELECT ARM.Rating FROM EmployeeKRA EK, EmployeeKRARatings EKR, AppraisalRatingMaster ARM WHERE EK.EmpKRAID = EKR.EmpKRAID AND EKR.RatingID = ARM.AppraisalRatingsID AND EK.EmpKRAID = '%d'" % (int(KRAID))
 		cursor.execute(query)
 
 	elif choice == "self comment" :
-
 		query = "SELECT SelfComments FROM EmployeeKRASelfComments WHERE EmpKRAID = '%d'" % (int(KRAID))
 		cursor.execute(query)
+
 	elif choice == "manager comment":
 		cursor.execute()
-	else:
-		return "Incorect Choice"
-
+	
 	count = cursor.rowcount
 
 	if count < 1:
-		speech = str(choice)+" not assigned for this KRAID"
+		speech = str(choice)+" is not available for this KRAID. Try some other KRAID"
+
+		del parameters["KRAID"]
+		del parameters["choice"]
+		return { "speech" : speech, 
+				"contextOut": [{"name":"show_kra_title", "lifespan":555, "parameters": parameters }] }
 	else:
 		results = cursor.fetchall()
 		speech = "KRA "+choice.title()+" : <br> "
@@ -143,16 +196,26 @@ def getKraDescription(KRAID, choice, whose, db):
 		for row in results:
 			speech = speech + str(row[0])
 
-		if (whose == 'me' or whose == 'my' or whose == 'mine' or whose == 'myself') and choice == 'self comment':
+		if whose == 'me' and choice == 'self comment':
 			speech = speech + "<br><br>Do you want to update the "+str(choice)+"?"
+			contextOut = [{"name":"yes_update", "lifespan":555, "parameters": parameters }, {"name":"no_update", "lifespan":555, "parameters": parameters }]
+
 		elif whose == 'subordinate' and choice != 'self comment' :
 			speech = speech + "<br><br>Do you want to update the "+str(choice)+"?"
+			contextOut = [{"name":"yes_update", "lifespan":555, "parameters": parameters }, {"name":"no_update", "lifespan":555, "parameters": parameters }]
+
+		else:
+			speech = speech + "<br>Request completed. What more can I do for you?"
+			contextOut = [{"name":"showkra", "lifespan":555, "parameters": { "firstname": parameters['firstname'], "lastname" : parameters['lastname'], "employeeId" : '{0:06}'.format(int(parameters['employeeId'])) } }]
+
 
 	logging.info(speech)
-	return speech
+
+	return { "speech" : speech, 
+				"contextOut": contextOut }
 
 
-def updateKRA(KRAID, choice, newValue, db):
+def updateKRA(KRAID, choice, newValue, parameters, db):
 	logging.info("Inside updateKRA()")
 
 	cursor = db.cursor()	
@@ -169,26 +232,21 @@ def updateKRA(KRAID, choice, newValue, db):
 			db.commit()
 		except :
 			db.rollback()
-			return "Unable to update the Description"
-
+			speech = "Unable to update the Description. Please try again later"
+		
 	elif choice == "ratings":
 		try:
 			query = "SELECT ARM.AppraisalRatingsID FROM EmployeeKRA EK, EmployeeKRARatings EKR, AppraisalRatingMaster ARM WHERE EK.EmpKRAID = EKR.EmpKRAID AND EKR.RatingID = ARM.AppraisalRatingsID AND EK.EmpKRAID = '%d'" % ( int(KRAID))
 			cursor.execute(query)
-			
 			results = cursor.fetchone()
-			
 			logging.info("results :"+str(results))
-
 			query2 = "UPDATE AppraisalRatingMaster set Rating = '%d' WHERE AppraisalRatingsID = '%d'" % (int(newValue),int(results[0]))
-
 			cursor = db.cursor()
 			cursor.execute(query2)
-
 			db.commit()
 		except:
 			db.rollback()
-			return "Unable to update the Rating"
+			speech = "Unable to update the Rating. Please try again later"
 
 	elif choice == "self comment" :
 		try:
@@ -197,7 +255,7 @@ def updateKRA(KRAID, choice, newValue, db):
 			db.commit()
 		except:
 			db.rollback()
-			return "Unable to update the Self Comments"
+			speech = "Unable to update the Self Comments. Please try again later"
 
 	elif choice == "manager comment":
 		try:
@@ -206,9 +264,10 @@ def updateKRA(KRAID, choice, newValue, db):
 			db.commit()
 		except:
 			db.rollback()
-			return "Unable to update the Manager's Comments"
+			speech = "Unable to update the Manager's Comments. Please try again later"
 
-	else:
-		return "Incorect Choice"
+	if not speech:
+		speech = choice.title() + " updated successfully to "+str(newValue)+"<br> Request completed"
 
-	return choice.title() + " updated successfully to "+str(newValue)
+	return { "speech" : speech+"<br>How may I help you?",
+			"contextOut" :[{"name":"showname", "lifespan":555, "parameters":{ "firstname": parameters['firstname'], "lastname" : parameters['lastname'], "employeeId" : parameters['employeeId'] }}] }

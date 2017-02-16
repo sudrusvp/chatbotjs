@@ -37,7 +37,7 @@
 .sent{
 	margin: 10px 0px;
 	padding: 10px;
-	padding-right: 30px;
+	padding-left: 30px;
 	background: #245580;
 	color: white;
 	border-radius: 5px;
@@ -79,7 +79,7 @@
     border-bottom: 10px solid transparent;
     border-right: 10px solid #507ea7;
   	bottom: 1px;
-  	left: -10px;
+  	left: -9px;
 }
 
 

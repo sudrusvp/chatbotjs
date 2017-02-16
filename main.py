@@ -11,6 +11,7 @@ import dbconnect as db
 import kras
 import competencies as com
 import apiai
+import actions
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -58,91 +59,22 @@ def kra():
 		parameters = req['result']['parameters']
 		action = req['result']['action']
 
-		if action == 'getname': #case for authentication
-
-			logging.info("inside getname")
-			if kras.checkUser(parameters['firstname'].title(), parameters['lastname'].title(), '{0:06}'.format(int(parameters['employeeId'])), dbconnect) :
-				logging.info("returning True")
-				webhook_res = { "speech" : "Welcome "+parameters['firstname']+" "+parameters['lastname']+" <br>How may I help you?",
-								"contextOut": [{"name":"showkra", "lifespan":555, "parameters":{ "firstname": parameters['firstname'], "lastname" : parameters['lastname'], "employeeId" : parameters['employeeId'] }}] }
-			else:
-				logging.info("returning False")
-
-				webhook_res = { "speech" : "The Employee ID does not match with the name entered. <BR><BR> Please enter the correct Employee ID & your full name",
-								"contextOut": [{"name":"getname", "lifespan":555, "parameters":{}}] }
-			
-		elif action == 'showkra': #case to show kra
-			logging.info("inside showkra")
-
-			if parameters['whose'].lower() == 'me':
-				speech = kras.getKras('{0:06}'.format(int(parameters['employeeId'])),dbconnect)
-				webhook_res = { "speech" : speech['speech'],
-								"contextOut": [{"name":speech['contextOut'], "lifespan":555, "parameters":{ "firstname": parameters['firstname'], "lastname" : parameters['lastname'], "employeeId" : parameters['employeeId'], "whose" : parameters['whose'] } }] }
-
-
-			elif parameters['whose'].lower() == 'subordinate':
-				speech = kras.getSubordinates('{0:06}'.format(int(parameters['employeeId'])), dbconnect)
-				webhook_res = { "speech" : speech,
-								"contextOut": [{"name":"show_kra_sub", "lifespan":555, "parameters":{ "firstname": parameters['firstname'], "lastname" : parameters['lastname'], "employeeId" : parameters['employeeId'], "whose" : parameters['whose'] } }] }
-
-			else:
-				webhook_res = { "speech" : "I didnt get that.. <BR> Please try entering correctly, Whose KRAs do you want to see? (yourself / subordinate)",
-								"contextOut": [{"name":"showkra", "lifespan":555, "parameters":{ "firstname": parameters['firstname'], "lastname" : parameters['lastname'], "employeeId" : parameters['employeeId'] } }] }
-
-		elif action == 'showkra_of_subordinate':
-			speech = kras.getKras('{0:06}'.format(int(parameters['employeeId'])), dbconnect, '{0:06}'.format(int(parameters['subordinateId'])))
-
-		elif action == "get_kra_title":
-			speech = kras.getKraDescription(parameters['KRAID'],parameters['choice'].lower(), parameters['whose'].lower(), dbconnect)	
-
-		elif action == "update_yes_kra" :
-			speech = kras.updateKRA(parameters['KRAID'], parameters['choice'].lower(), parameters['newValue'], dbconnect)
-		
-
-
-
-
-		elif action == "show_competencies":
-			logging.info("inside show_competencies")
-
-			if parameters['whose'].lower() == 'me' or parameters['whose'].lower() == 'my' or parameters['whose'].lower() == 'myself' :
-				speech = com.getCompetencies('{0:06}'.format(int(parameters['employeeId'])),dbconnect)
-
-			elif parameters['whose'].lower() == 'subordinate' or parameters['whose'].lower() == 'subordinates':
-				speech = com.getSubordinates('{0:06}'.format(int(parameters['employeeId'])), dbconnect)
-			else:
-				speech = "I didnt get that.."
-
-		elif action == "show_competencies_of_subordinate":
-			
-			speech = com.getCompetencies('{0:06}'.format(int(parameters['employeeId'])), dbconnect, '{0:06}'.format(int(parameters['subordinateId'])))
-
-		elif action == "get_competencies_details":
-			speech = com.getCompetencies_details(parameters['EmpCompetencyID'], dbconnect)
-
-		else:
-			logging.info("returning default")
-			speech = "Hi, how may I help you"
+		webhook_res = actions.actions_handler[action](parameters, dbconnect)
 
 		dbconnect.close()
 
-		if webhook_res:
-			req = {
-					"speech": webhook_res["speech"],
-					"displayText": webhook_res["speech"],
-					"data": {"speech": webhook_res["speech"] },
-					"contextOut" : webhook_res["contextOut"]
-				}
-		else :
-			req = {
-					"speech": speech,
-					"displayText": speech,
-					"data": {"speech": speech},
-				}
+		req = {
+			"speech": webhook_res["speech"],
+			"displayText": webhook_res["speech"],
+			"data": {"speech": webhook_res["speech"] },
+			"contextOut" : webhook_res["contextOut"]
+		}
+		
 		req = json.dumps(req, indent=4)
 		r = make_response(req)
 		r.headers['Content-Type'] = 'application/json'
 		return r
+
 
 
 @app.route("/recognition", methods=['GET', 'POST'])
