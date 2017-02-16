@@ -1,6 +1,7 @@
 
 import kras
 import competencies as com
+import logging
 
 def getname(parameters, dbconnect):
 	logging.info("inside getname")
