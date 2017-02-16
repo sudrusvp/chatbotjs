@@ -1,12 +1,13 @@
-body{
-    background: linear-gradient(120deg, #4425cc, #a9778f);
- 	margin-bottom: 100px;
- 	overflow-x: hidden;
+.chatdiv{
+	height:450px ;
+	overflow-y: scroll;
+	background: #f1f1f1;
+	padding: 0px;
 }
 
 .chatdiv{
 
-	background: rgba(255, 255, 255, 0.05);
+	background: #f1f1f1;
 	height:450px ;
 	overflow-y: scroll;
 	overflow-x: hidden;
@@ -30,36 +31,17 @@ body{
 .chatdiv::-webkit-scrollbar-thumb
 {
 	border-radius: 10px;
-	background-color: rgba(255, 255, 255, 0.2);
-}
-
-#message{
-	background-color: rgba(255, 255, 255, 0.05);
-	border: none;
-	height: 45px;
-	color: #fff;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
-}
-
-#send{
-	background-color: rgba(255, 255, 255, 0.10);
-	height: 44px;
-	width:50px ;
-	color: #fff;
-	margin: 1px;
-	border-radius: 0px;
+	background-color: #245580;
 }
 
 .sent{
-	margin: 10px 0px; 
+	margin: 10px 0px;
 	padding: 10px;
-	padding-left: 30px;
-	background-color: rgba(255, 255, 255, 0.10);
+	padding-right: 30px;
+	background: #245580;
 	color: white;
 	border-radius: 5px;
 	display: inline-block;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
-	
 }
 
 .sent:after {
@@ -72,7 +54,7 @@ body{
 	left: auto;
 	border-top: 10px solid transparent;
 	border-bottom: 10px solid transparent;
-	border-left: 10px solid rgba(255, 255, 255, 0.10);
+	border-left: 10px solid #245580;
  	right: -17px;
 
 }
@@ -81,14 +63,13 @@ body{
 	margin: 10px 0px;
 	padding: 10px;
 	padding-left: 30px;
-	background-color: rgba(255, 255, 255, 0.10);
+	background: #507ea7;
 	color: white;
 	border-radius: 5px;
 	display: inline-block;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
 }
 
-.received:after {
+received:after {
   	border-radius: 20px / 5px;
   	content: '';
   	display: block;
@@ -96,40 +77,42 @@ body{
 
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-right: 10px solid rgba(255, 255, 255, 0.1);
+    border-right: 10px solid #507ea7;
   	bottom: 1px;
   	left: -10px;
 }
 
+
 .chatheader{
-	background:  rgba(255, 255, 255, 0.20);
-	padding: 5px;
+	background: #245580;
+	padding: 10px;
 } 
 
 th,td{
 	padding: 3px;
     border: 1px solid white;
-    background: rgba(255, 255, 255, 0.10);
+    background: #245580;
 }
 
 .micspan {
 	float: right;
-	margin-right: 18px;
-	margin-top: -27px;
+	margin-right: 12px;
+	margin-top: -23px;
 	position: relative;
 	z-index: 2;
-	color: #d0cdcd;
+	color: #0057a3;
 	cursor:pointer;
 }
 
 .micspan_on {
 	float: right;
-	margin-right: 18px;
-	margin-top: -27px;
+	margin-right: 12px;
+	margin-top: -23px;
 	position: relative;
 	z-index: 2;
 	color: #fd2a2a;
 	cursor:pointer;
 }
+
 
 

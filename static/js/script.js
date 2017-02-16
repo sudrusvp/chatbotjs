@@ -1,7 +1,7 @@
 $(function(){
 
-	var sentHead = "<div class='row' style='margin: 5px 0px'> <div class='col-sm-offset-4 col-sm-8 text-right'> <div class='col-sm-12 sent text-left'>";
-	var receivedHead = "<div class='row' style='margin: 5px 0px'> <div class='col-sm-8 text-left'> <div class='col-sm-12 received text-left'>";
+	var sentHead = "<div class='row' style='margin: 5px 0px'> <div class='col-sm-offset-4 col-sm-8 text-right'> <div class='sent col-sm-12 text-left'>";
+	var receivedHead = "<div class='row' style='margin: 5px 0px'> <div class='col-sm-8 text-left'> <div class='received col-sm-12 text-left'>";
 	var tail = "</div> </div> </div>";
 	var sessionID = md5((Math.floor(Math.random() * 10000000000)).toString())
 	
@@ -13,8 +13,7 @@ $(function(){
 			"sessionID" : sessionID
 		};
 
-		//$('.chatdiv').append(sentHead+data.message+tail);
-
+		
 		$(sentHead+data.message+tail).hide().appendTo('.chatdiv').show("puff", {times : 3}, 200);
 
 		$(".chatdiv").animate({ scrollTop: $('.chatdiv').prop("scrollHeight")}, 1000);
@@ -22,7 +21,8 @@ $(function(){
 
 		$.post("/",data,function(res){
 			console.log(res)
-			$('.chatdiv').append(receivedHead+res+tail);
+			$(receivedHead+res+tail).hide().appendTo('.chatdiv').show("puff", {times : 3}, 200);
+
 			$(".chatdiv").animate({ scrollTop: $('.chatdiv').prop("scrollHeight")}, 1000);
 
 		});
