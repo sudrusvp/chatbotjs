@@ -271,7 +271,7 @@ def getKraTitleDetailsAll(KRAID, whose, parameters, db):
 
 	else:
 		results = cursor3.fetchall()
-		speech = sppech + "<br><b>Self Comments:</b> <br> "
+		speech = speech + "<br><b>Self Comments:</b> <br> "
 
 		for row in results:
 			speech = speech + str(row[0])
