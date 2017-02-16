@@ -250,11 +250,11 @@ def getKraTitleDetailsAll(KRAID, whose, parameters, db):
 	count = cursor2.rowcount
 
 	if count < 1:
-		speech = speech + "<br><b>Ratings:</b> <br> No ratings are available for this KRAID"
+		speech = speech + "<br><br><b>Ratings:</b> <br> No ratings are available for this KRAID"
 
 	else:
 		results = cursor2.fetchall()
-		speech = speech + "<br><b>Ratings:</b> <br> "
+		speech = speech + "<br><br><b>Ratings:</b> <br> "
 
 		for row in results:
 			speech = speech + str(row[0])
@@ -267,11 +267,11 @@ def getKraTitleDetailsAll(KRAID, whose, parameters, db):
 	count = cursor3.rowcount
 
 	if count < 1:
-		speech = speech + "<br><b>Self Comments:</b> <br> Self comment is not available for this KRAID"
+		speech = speech + "<br><br><b>Self Comments:</b> <br> Self comment is not available for this KRAID"
 
 	else:
 		results = cursor3.fetchall()
-		speech = speech + "<br><b>Self Comments:</b> <br> "
+		speech = speech + "<br><br><b>Self Comments:</b> <br> "
 
 		for row in results:
 			speech = speech + str(row[0])
