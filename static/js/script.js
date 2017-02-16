@@ -133,5 +133,16 @@ $(function(){
 	}
 
 
+	var degrees = 0
+	setInterval(function(){
+		degrees = degrees + 5
+		console.log(degrees)
+		$("#logo").css({'transform' : 'rotate('+ degrees +'deg)'}); 
+		
+		if(degrees == 360)
+			degrees = 0
+	}, 30);
 
+
+	//rotate()
 });

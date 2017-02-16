@@ -50,12 +50,12 @@
 	display: block;
 	position: absolute;
 	border: 8px solid transparent;
-	bottom: 1px;	
+	bottom: 9px;	
 	left: auto;
 	border-top: 10px solid transparent;
 	border-bottom: 10px solid transparent;
 	border-left: 10px solid #245580;
- 	right: -17px;
+ 	right: 0px;
 
 }
 
@@ -78,8 +78,8 @@
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     border-right: 10px solid #507ea7;
-  	bottom: 1px;
-  	left: -9px;
+  	bottom: 9px;
+  	left: 5px;
 }
 
 
