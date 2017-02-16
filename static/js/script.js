@@ -1,7 +1,7 @@
 $(function(){
 
-	var sentHead = "<div class='row' style='margin: 5px 0px'> <div class='col-sm-offset-4 col-sm-8 text-right'> <div class='col-sm-12 sent text-left'>";
-	var receivedHead = "<div class='row' style='margin: 5px 0px'> <div class='col-sm-8 text-left'> <div class='col-sm-12 received text-left'>";
+	var sentHead = "<div class='row' style='margin: 5px 0px'> <div class='col-sm-offset-4 col-sm-8 text-right'> <div class=' sent text-left'>";
+	var receivedHead = "<div class='row' style='margin: 5px 0px'> <div class='col-sm-8 text-left'> <div class=' received text-left'>";
 	var tail = "</div> </div> </div>";
 	var sessionID = md5((Math.floor(Math.random() * 10000000000)).toString())
 	
