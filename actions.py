@@ -13,7 +13,7 @@ def showkra( parameters, dbconnect):
 		webhook_res = kras.getKras('{0:06}'.format(int(parameters['employeeId'])), parameters, dbconnect)
 
 	elif parameters['whose'].lower() == 'subordinate':
-		webhook_res = kras.getSubordinates('{0:06}'.format(int(parameters['employeeId'])),parameters dbconnect)
+		webhook_res = kras.getSubordinates('{0:06}'.format(int(parameters['employeeId'])),parameters, dbconnect)
 	
 	else:
 		webhook_res = { "speech" : "I didnt get that.. <BR> Please try entering correctly, Whose KRAs do you want to see? (yourself / subordinate)",
