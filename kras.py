@@ -180,6 +180,7 @@ def getKraTitleDetails(KRAID, choice, whose, parameters, db):
 	elif choice == "manager comment":
 		cursor.execute()
 	
+
 	count = cursor.rowcount
 
 	if count < 1:
@@ -205,7 +206,7 @@ def getKraTitleDetails(KRAID, choice, whose, parameters, db):
 			contextOut = [{"name":"yes_update", "lifespan":555, "parameters": parameters }, {"name":"no_update", "lifespan":555, "parameters": parameters }]
 
 		else:
-			speech = speech + "<br>Request completed. What more can I do for you?"
+			speech = speech + "<br><br>Request completed. What more can I do for you?"
 			contextOut = [{"name":"showkra", "lifespan":555, "parameters": { "firstname": parameters['firstname'], "lastname" : parameters['lastname'], "employeeId" : '{0:06}'.format(int(parameters['employeeId'])) } }]
 
 
@@ -213,6 +214,73 @@ def getKraTitleDetails(KRAID, choice, whose, parameters, db):
 
 	return { "speech" : speech, 
 				"contextOut": contextOut }
+
+def getKraTitleDetailsAll(KRAID, whose, parameters, db):
+	logging.info("Inside getKraTitleDetailsAll()")
+
+	cursor1 = db.cursor()	
+	cursor2 = db.cursor()	
+	cursor3 = db.cursor()	
+
+	logging.info("cursor built")
+	logging.info("KRAID :" + str(KRAID))
+	logging.info("type of KRAID :" + str(type(KRAID)))
+
+	#description
+	query1 = "SELECT Description FROM EmployeeKRA WHERE EmpKRAID = '%d'" % (int(KRAID))
+	cursor1.execute(query1)
+		
+	count = cursor1.rowcount
+
+	if count < 1:
+		speech = "<b>Description:</b> <br> Description is not available for this KRAID"
+
+	else:
+		results = cursor1.fetchall()
+		speech = "<b>Description:</b> <br> "
+
+		for row in results:
+			speech = speech + str(row[0])
+
+
+	# "ratings"
+	query2 = "SELECT ARM.Rating FROM EmployeeKRARatings EKR, AppraisalRatingMaster ARM WHERE EKR.RatingID = ARM.AppraisalRatingsID AND EKR.EmpKRAID = '%d'" % (int(KRAID))
+	cursor2.execute(query2)
+
+	count = cursor2.rowcount
+
+	if count < 1:
+		speech = speech + "<br><b>Ratings:</b> <br> No ratings are available for this KRAID"
+
+	else:
+		results = cursor2.fetchall()
+		speech = speech + "<br><b>Ratings:</b> <br> "
+
+		for row in results:
+			speech = speech + str(row[0])
+
+
+	#"self comment" :
+	query3 = "SELECT SelfComments FROM EmployeeKRASelfComments WHERE EmpKRAID = '%d'" % (int(KRAID))
+	cursor3.execute(query3)
+
+	count = cursor3.rowcount
+
+	if count < 1:
+		speech = speech + "<br><b>Self Comments:</b> <br> Self comment is not available for this KRAID"
+
+	else:
+		results = cursor3.fetchall()
+		speech = sppech + "<br><b>Self Comments:</b> <br> "
+
+		for row in results:
+			speech = speech + str(row[0])
+
+
+	logging.info(speech)
+
+	return { "speech" : speech+"<br><br>Request completed.", 
+				"contextOut": [{"name":"showkra", "lifespan":555, "parameters": { "firstname": parameters['firstname'], "lastname" : parameters['lastname'], "employeeId" : '{0:06}'.format(int(parameters['employeeId'])) } }] }
 
 
 def updateKRA(KRAID, choice, newValue, parameters, db):
@@ -269,5 +337,5 @@ def updateKRA(KRAID, choice, newValue, parameters, db):
 	if not speech:
 		speech = choice.title() + " updated successfully to "+str(newValue)+"<br> Request completed"
 
-	return { "speech" : speech+"<br>How may I help you?",
+	return { "speech" : speech+"<br><br>How may I help you?",
 			"contextOut" :[{"name":"showname", "lifespan":555, "parameters":{ "firstname": parameters['firstname'], "lastname" : parameters['lastname'], "employeeId" : parameters['employeeId'] }}] }

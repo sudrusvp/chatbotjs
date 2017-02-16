@@ -27,7 +27,10 @@ def showkra_of_subordinate( parameters, dbconnect):
 	return kras.getKraSubordinate('{0:06}'.format(int(parameters['employeeId'])), '{0:06}'.format(int(parameters['subordinateId'])), parameters, dbconnect)
 
 def get_kra_title( parameters, dbconnect):
-	return kras.getKraTitleDetails(parameters['KRAID'],parameters['choice'].lower(), parameters['whose'].lower(), parameters, dbconnect)	
+	if parameters['choice'].lower() == "all":
+		return kras.getKraTitleDetailsAll(parameters['KRAID'], parameters['whose'].lower(), parameters, dbconnect)
+	else:
+		return kras.getKraTitleDetails(parameters['KRAID'],parameters['choice'].lower(), parameters['whose'].lower(), parameters, dbconnect)	
 
 def update_yes_kra( parameters, dbconnect):
 	webhook_res = kras.updateKRA(parameters['KRAID'], parameters['choice'].lower(), parameters['newValue'], dbconnect)
