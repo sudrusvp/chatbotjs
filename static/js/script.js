@@ -60,7 +60,8 @@ $(function(){
 	});
 
 	$("#send").click(function(event){
-		send()
+		if( $("#message").val() != "")
+			send()
 	})
 
 	var recognition;
