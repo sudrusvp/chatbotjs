@@ -33,7 +33,7 @@ def get_kra_title( parameters, dbconnect):
 		return kras.getKraTitleDetails(parameters['KRAID'],parameters['choice'].lower(), parameters['whose'].lower(), parameters, dbconnect)	
 
 def update_yes_kra( parameters, dbconnect):
-	webhook_res = kras.updateKRA(parameters['KRAID'], parameters['choice'].lower(), parameters['newValue'], dbconnect)
+	webhook_res = kras.updateKRA(parameters['KRAID'], parameters['choice'].lower(), parameters['newValue'], parameters, dbconnect)
 	return webhook_res
 
 def show_competencies( parameters, dbconnect):
