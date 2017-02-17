@@ -294,6 +294,7 @@ def updateKRA(KRAID, choice, newValue, parameters, db):
 	logging.info("type of KRAID :" + str(type(KRAID)))
 	logging.info("newValue:"+ str(newValue))
 
+	speech = None
 	if choice == "description":	
 		try:
 			cursor.execute("UPDATE EmployeeKRA set Description = '%s' WHERE EmpKRAID = '%d'" % (str(newValue), int(KRAID)))
