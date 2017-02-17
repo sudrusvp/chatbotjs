@@ -34,7 +34,7 @@ def getKras(employeeId, parameters, db):
 
 	logging.info("cursor built")
 
-	cursor.execute("SELECT K.EmpKRAID, K.KRATitle, K.Weight FROM EmployeeKRA K, UserMaster U WHERE U.EmpCode = '%s' AND K.EmpID = U.UserID" % (str(employeeId)))
+	cursor.execute("SELECT K.EmpKRAID, K.KRATitle, K.Weight FROM EmployeeKRA K, UserMaster U WHERE U.EmpCode = '%s' AND K.AppraisalCycleID = 12 AND K.EmpID = U.UserID" % (str(employeeId)))
 
 	count = cursor.rowcount
 
