@@ -32,27 +32,14 @@ $(function(){
 
 			$(".chatdiv").animate({ scrollTop: $('.chatdiv').prop("scrollHeight")}, 1000);
 
+			var msg = new SpeechSynthesisUtterance();
+    		var voices = window.speechSynthesis.getVoices();
+		    msg.voiceURI = "native";
+		    msg.text = res;
+		    msg.lang = "en-US";
+		    window.speechSynthesis.speak(msg);
+
 		});
-		
-		
-		/*const client = new ApiAi.ApiAiClient({accessToken: '6d2145bdf1b4463c86d5c6bcc2f05b9c', sessionId : "session1"});
-		let promise = client.textRequest(data.message);
-		
-		promise
-		    .then(handleResponse)
-    		.catch(heandleError);
-
-		function handleResponse(serverResponse) {
-		        console.log(serverResponse);
-		        var res = serverResponse.result.fulfillment.speech;
-		        $('.chatdiv').append(receivedHead+res+tail);
-				$(".chatdiv").animate({ scrollTop: $('.chatdiv').prop("scrollHeight")}, 1000);
-
-		}
-		function heandleError(serverError) {
-		        console.log(serverError);
-		}
-*/
 
 	};
 
